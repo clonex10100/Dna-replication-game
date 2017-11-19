@@ -6,9 +6,9 @@ import javafx.scene.image.Image;
  * 
  * @author clonex10100
  * Superclass for DnaNucleotide and RnaNucleotide
- * Represents a nucleotide of base base and returns the corrosponding image
+ * Represents a nucleotide of base base and returns the corresponding image
  */
-public class Nucleotide {
+public abstract class Nucleotide {
 	protected char base;
 	protected Image image;
 	public Image getImage() {
@@ -20,12 +20,8 @@ public class Nucleotide {
 	public char getBase() {
 		return base;
 	}
-	public DnaNucleotide getDnaComplement() {
-		return null;
-	}
-	public RnaNucleotide getRnaComplement() {
-		return null;
-	}
+	public abstract DnaNucleotide getDnaComplement();
+	public abstract RnaNucleotide getRnaComplement();
 	@Override
 	public String toString() {
 		return String.valueOf(base);
