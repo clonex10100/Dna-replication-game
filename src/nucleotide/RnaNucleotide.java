@@ -1,9 +1,18 @@
 package nucleotide;
 
+import javafx.scene.image.Image;
 
-public class RnaNucleotide extends Nucleotide {
+public class RnaNucleotide extends Nucleotide{
+	private char base;
 	public RnaNucleotide(char baseNew){
 		base = baseNew;
+//		switch(base) {
+//		case 'A': image = new Image("a.png",100,100,true,false);
+//		case 'U': image = new Image("u.png",100,100,true,false);
+//		case 'G': image = new Image("g.png",100,100,true,false);
+//		case 'C': image = new Image("c.png",100,100,true,false);
+//		}
+		image = new Image("a.png",100,100,true,false);
 	}
 	public DnaNucleotide dnaComplement(){
 		switch(base){
