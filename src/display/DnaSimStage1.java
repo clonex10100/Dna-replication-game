@@ -15,14 +15,14 @@ public class DnaSimStage1 extends Application {
 	}
 	@Override
 	public void start(Stage stage) {
-		DnaNucleotide x = new DnaNucleotide('A');
 		StackPane root = new StackPane();
 		Scene scene = new Scene(root);
 		final Canvas canvas = new Canvas(1000, 500);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image A = x.getImage();
-		
-		gc.drawImage(A,100,100);
+		Strand dna = Strand.getRandomStrand(5,"dna");
+		Strand dna2 = dna.getComplementaryDnaStrand();
+		dna.draw(gc,100,300);
+		dna2.draw(gc, 100, 100);
 		root.getChildren().add(canvas);
 		stage.setScene(scene);
 		stage.show();

@@ -5,15 +5,16 @@ import javafx.scene.image.Image;
 public class DnaNucleotide extends Nucleotide{
 	public DnaNucleotide(char baseNew){
 		base = baseNew;
-//		switch(base) {
-//		case 'A': image = new Image("a.png",100,100,true,false);
-//		case 'T': image = new Image("t.png",100,100,true,false);
-//		case 'G': image = new Image("g.png",100,100,true,false);
-//		case 'C': image = new Image("c.png",100,100,true,false);
-//		}
-		image = new Image("a.png",100,100,true,false);
+		switch(base) {
+		case 'A': image = new Image("a.png",100,100,true,false); break;
+		case 'T': image = new Image("a.png",100,100,true,false); break;
+		case 'G': image = new Image("a.png",100,100,true,false); break;
+		case 'C': image = new Image("a.png",100,100,true,false); break;
+		default: throw new IllegalArgumentException("Expected A, T, G, or J");
+		}
 	}
-	public DnaNucleotide dnaComplement(){
+	@Override
+	public DnaNucleotide getDnaComplement(){
 		switch(base){
 			case 'A': return new DnaNucleotide('T');
 			case 'T': return new DnaNucleotide('A');
@@ -22,7 +23,8 @@ public class DnaNucleotide extends Nucleotide{
 		}
 		return null;
 	}
-	public RnaNucleotide rnaComplement(){
+	@Override
+	public RnaNucleotide getRnaComplement(){
 		switch(base){
 			case 'A': return new RnaNucleotide('U');
 			case 'T': return new RnaNucleotide('A');
@@ -30,6 +32,9 @@ public class DnaNucleotide extends Nucleotide{
 			case 'C': return new RnaNucleotide('G');
 		}
 		return null;
+	}
+	public String toString() {
+		return "Dna: " + String.valueOf(base);
 	}
 	
 }
