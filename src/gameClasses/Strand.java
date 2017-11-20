@@ -8,8 +8,13 @@ import java.util.Random;
 public class Strand {
 	private Nucleotide[] bases;
 	private int length = 0;
+	private int[] bonds;
 	public Strand(int length) {
 		bases = new Nucleotide[length];
+		bonds = new int[length];
+		for(int i = 0; i < length; i++){
+			bonds[i] = True;
+		}
 	}
 	/**
 	 * Wrapper for length of Strand
@@ -26,12 +31,64 @@ public class Strand {
 		return bases.clone();
 	}
 	/**
+	* Returns Nucleotide at specified position
+	* @param pos int of the index you want the nucleotide of
+	* @return Nucleotide at pos in strand
+	*/
+	public Nucleotide getNucleotide(int pos){
+		if( pos < length){
+			return bases[pos];
+		}
+		else{
+			throw new IllegalArgumentException(""Expected pos to be less than length");
+		}
+	}
+	/**
+	*Toggles whether the bond between the 3 prime end of this nucleotide 
+	*and the 5 prime end of the next one is broken or not
+	*@param Pos. Position of nucleotide that the bond is attatched to the suger
+	*/
+	public void toggleBond(int pos){
+		if( pos < length){
+			bonds[pos] = !bonds[pos];
+		}
+		else{
+			throw new IllegalArgumentException(""Expected pos to be less than length")
+		}
+	
+	/**
 	 * Adds dna or rna Nucleotide to strand
 	 * @param Nucleotide
 	 */
-	public void addNucleotide(Nucleotide nucleotide) {
+	public void addNucleotideToEnd(Nucleotide nucleotide) {
 		bases[length]= nucleotide;
 		length++;
+	}
+	/**
+	* Sets psotion to be empty
+	* @param Pos: Index you want to remove
+	*/
+	public void removeNucleotide(int pos){
+		//add input sanitisations
+		if( pos < length){
+			bases[pos]=null
+		}
+		else{
+			throw new IllegalArgumentException(""Expected pos to be less than length")
+		}
+	}
+	/**
+	*Sets nucleotide at specified position to specified nucleotide
+	* @param Pos, position to replace
+	* @param Nucleotide to put at pos
+	*/
+	public void addNucleotide(int pos, Nucleotide nucleotide){
+		if( pos < length){
+			bases[pos]=nucleotide
+		}
+		else{
+			throw new IllegalArgumentException(""Expected pos to be less than length")
+		}
 	}
 	/**
 	 * Generates a random strand of rna or dna
@@ -97,8 +154,16 @@ public class Strand {
 	 */
 	public void draw(GraphicsContext gc,int x, int y) {
 		for(int i = 0; i < length; i++) {
-			bases[i].draw(gc,x,y);
-			x+=100;
+			if(bases[i] != null){
+				bases[i].draw(gc,x,y);
+				if(i+1< length){
+					//todo add a way to specify two nucletides not to draw a line through
+					if(bases[i+1] != null && bonds[i]){
+						//draw line
+					}
+				}
+			}
+			x+=imageSize[0];
 		}
 	}
 	/**
