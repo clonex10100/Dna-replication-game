@@ -1,19 +1,19 @@
-package nucleotide;
+package gameClasses;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class RnaNucleotide extends Nucleotide{
-	private char base;
 	public RnaNucleotide(char baseNew){
 		base = baseNew;
 		switch(base) {
-		case 'A': image = new Image("a.png",100,100,true,false); break;
-		case 'U': image = new Image("a.png",100,100,true,false); break;
-		case 'G': image = new Image("a.png",100,100,true,false); break;
-		case 'C': image = new Image("a.png",100,100,true,false); break;
+		case 'A': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
+		case 'U': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
+		case 'G': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
+		case 'C': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
 		default: throw new IllegalArgumentException("Must be A, U, G, or c");
 		}
-
+		iv = new ImageView(image);
 	}
 	@Override
 	public DnaNucleotide getDnaComplement(){
@@ -34,8 +34,5 @@ public class RnaNucleotide extends Nucleotide{
 			case 'C': return new RnaNucleotide('G'); 
 		}
 		return null;
-	}
-	public String toString() {
-		return "Rna: " + String.valueOf(base);
 	}
 }
