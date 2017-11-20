@@ -53,7 +53,7 @@ public class Strand {
 			bonds[pos] = !bonds[pos];
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length")
+			throw new IllegalArgumentException(""Expected pos to be less than length");
 		}
 	
 	/**
@@ -71,10 +71,10 @@ public class Strand {
 	public void removeNucleotide(int pos){
 		//add input sanitisations
 		if( pos < length){
-			bases[pos]=null
+			bases[pos]=null;
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length")
+			throw new IllegalArgumentException(""Expected pos to be less than length");
 		}
 	}
 	/**
@@ -84,10 +84,10 @@ public class Strand {
 	*/
 	public void addNucleotide(int pos, Nucleotide nucleotide){
 		if( pos < length){
-			bases[pos]=nucleotide
+			bases[pos]=nucleotide;
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length")
+			throw new IllegalArgumentException(""Expected pos to be less than length");
 		}
 	}
 	/**
