@@ -1,8 +1,10 @@
 package gameClasses;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+/**
+ * Class that represents RnaNucleotides
+ * @author tonyd
+ */
 public class RnaNucleotide extends Nucleotide{
 	public RnaNucleotide(char baseNew){
 		base = baseNew;
