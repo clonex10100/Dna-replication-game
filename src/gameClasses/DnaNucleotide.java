@@ -36,9 +36,5 @@ public class DnaNucleotide extends Nucleotide{
 			case 'C': return new RnaNucleotide('G');
 		}
 		return null;
-	}
-	public String toString() {
-		return "Dna: " + String.valueOf(base);
-	}
-	
+	}	
 }
