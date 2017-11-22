@@ -9,10 +9,10 @@ public class RnaNucleotide extends Nucleotide{
 	public RnaNucleotide(char baseNew){
 		base = baseNew;
 		switch(base) {
-		case 'A': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'U': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'G': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'C': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
+		case 'A': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'U': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'G': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'C': image = new Image("a.png",imageSize,imageSize,true,false); break;
 		default: throw new IllegalArgumentException("Must be A, U, G, or c");
 		}
 		iv = new ImageView(image);

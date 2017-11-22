@@ -9,14 +9,60 @@ public class Strand {
 	private Nucleotide[] bases;
 	private int length = 0;
 	private boolean[] bonds;
-	private int[] imageSize = Nucleotide.getImageSize();
-	
-	public Strand(int length) {
+	private int imageSize = Nucleotide.getImageSize();
+	private int x;
+	private int y;
+	private int r;
+	public Strand(int length){
+		this(length,0,0,0);
+	}
+	public Strand(int length,int x,int y) {
+		this(length,x,y,0);
+	}
+	public Strand(int length,int x,int y, int r) {
+		this.x = x;
+		this.y = y;
+		this.r = r;
 		bases = new Nucleotide[length];
 		bonds = new boolean[length];
 		for(int i = 0; i < length; i++){
 			bonds[i] = true;
 		}
+		
+	}
+	/**
+	 * Sets the position of the strands left most corner with default rotation
+	 * @param x x pos
+	 * @param y y pos
+	 */
+	public void setPos(int x,int y){
+		this.x=x;
+		this.y=y;		
+	}
+	/**
+	 * Sets the position of the strands left most corner with default rotation
+	 * @param x x pos
+	 * @param y y pos
+	 * @param r rotation 0= straight left
+	 */
+	public void setPos(int x,int y,int r){
+		this.x=x;
+		this.y=y;
+		this.r=r;
+	}
+	/**
+	 * Sets the rotation
+	 * @param r rotation
+	 */
+	public void setRotation(int r) {
+		this.r = r;
+	}
+	/**
+	 * Wrapper for strand position
+	 * @return Int[2] x,y
+	 */
+	public int[] getPos() {
+		return new int[] {x,y};
 	}
 	/**
 	 * Wrapper for length of Strand
@@ -85,6 +131,19 @@ public class Strand {
 	* @param Nucleotide to put at pos
 	*/
 	public void addNucleotide(int pos, Nucleotide nucleotide){
+		if( pos < length && bases[pos] == null){
+			bases[pos]=nucleotide;
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
+	 * Swaps nucleotide at position with specified nucleotide
+	 * @params nucleotide- nucleotide to insert
+	 * @params pos- pos to swap nucleotide in
+	 */
+	public void swapNucleotide(int pos, Nucleotide nucleotide) {
 		if( pos < length){
 			bases[pos]=nucleotide;
 		}
@@ -151,39 +210,28 @@ public class Strand {
 	/**
 	 * Draws all nucleotides in strand from left to right
 	 * @param gc: GraphicsContext on which to draw strand
-	 * @param x: Starting x value to draw strand
-	 * @param y: Starting y value to draw strand
 	 */
-	public void draw(GraphicsContext gc,int x, int y) {
+	public void draw(GraphicsContext gc) {
+		if(r!=0) {
+		    gc.save();
+		    gc.translate(x+50, y+50);
+		    gc.rotate(r);
+		    gc.translate(-(x+50), -(y+50));
+		}
 		for(int i = 0; i < length; i++) {
 			if(bases[i] != null){
 				bases[i].draw(gc,x,y);
 				if(i+1< length){
-					//todo add a way to specify two nucletides not to draw a line through
 					if(bases[i+1] != null && bonds[i]){
-						gc.strokeLine(x+imageSize[0]*.81, y+imageSize[1]*.81, x+imageSize[0]*1.10, y+imageSize[1]*.73);
-						//gc.strokeLine(x, y, x+imageSize[0]*1.10, y+imageSize[1]*.73);
+						gc.strokeLine(x+imageSize*.81, y+imageSize*.81, x+imageSize*1.10, y+imageSize*.73);
 					}
 				}
 			}
-			x+=imageSize[0];
+			x+=imageSize;
 		}
-	}
-	/**
-	 * Draws all nucleotides in strand from left to right and then rotates them
-	 * @param gc: GraphicsContext on which to draw strand
-	 * @param x: Starting x value to draw strand
-	 * @param y: Starting y value to draw strand
-	 * @param r: Rotation in degrees to rotate strand
-	 */
-	public void draw(GraphicsContext gc, int x, int y, int r) {
-	    gc.save();
-	    gc.translate(x+50, y+50);
-	    gc.rotate(r);
-	    gc.translate(-(x+50), -(y+50));
-	    this.draw(gc, x, y);
-	    gc.restore();
-
+		if(r!=0) {
+			gc.restore();
+		}
 	}
 	@Override
 	public String toString() {

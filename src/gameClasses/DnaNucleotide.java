@@ -9,10 +9,10 @@ public class DnaNucleotide extends Nucleotide{
 	public DnaNucleotide(char baseNew){
 		base = baseNew;
 		switch(base) {
-		case 'A': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'T': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'G': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
-		case 'C': image = new Image("a.png",imageHeight,imageWidth,true,false); break;
+		case 'A': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'T': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'G': image = new Image("a.png",imageSize,imageSize,true,false); break;
+		case 'C': image = new Image("a.png",imageSize,imageSize,true,false); break;
 		default: throw new IllegalArgumentException("Expected A, T, G, or J");
 		}
 		iv = new ImageView(image);

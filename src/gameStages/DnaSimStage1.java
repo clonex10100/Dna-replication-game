@@ -30,8 +30,14 @@ public class DnaSimStage1 extends Application {
 		final Canvas canvas = new Canvas(1000, 500);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		Strand dna = Strand.getRandomStrand(5,"dna");
+		dna.setPos(100, 300);
+//		dna.draw(gc);
+//		dna.setPos(100, 300, -30);
+//		dna.draw(gc);
 		Helix helix = new Helix(dna);
-		helix.draw(gc,100,300);	
+		helix.draw(gc);	
+		helix.setPos(0, 0);
+		helix.draw(gc);
 		//dna2.draw(gc, 400, 100,180);
 		//dna3.draw(gc, 100, 200,0);
 		root.getChildren().add(canvas);
