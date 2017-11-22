@@ -1,4 +1,4 @@
-package gameClasses;
+package nucleotides;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -13,7 +13,7 @@ public abstract class Nucleotide {
 	protected Image image;
 	protected ImageView iv;
 	//Todo: Scaling based on display window size
-	protected static int imageSize = 100;
+	protected static int imageSize = 70;
 	/**
 	 * Acts as wrapper for Image representing the nucleotide.
 	 * @return an Image representing the nucleotide.

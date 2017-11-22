@@ -1,4 +1,4 @@
-package gameClasses;
+package nucleotides;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.Random;
 /**
@@ -191,7 +191,7 @@ public class Strand {
 	public Strand getComplementaryDnaStrand() {
 		//Todo: Should be in inverse order so they match when new strand is printed with a 180 rotation
 		Strand strand = new Strand(length);
-		for(int i = 0; i < length; i++) {
+		for(int i = length-1; i >= 0; i--) {
 			strand.addNucleotideToEnd(bases[i].getDnaComplement());
 		}
 		return strand;
@@ -202,8 +202,8 @@ public class Strand {
 	 */
 	public Strand getComplementaryRnaStrand() {
 		Strand strand = new Strand(length);
-		for(int i = 0; i < length; i++) {
-			strand .addNucleotideToEnd(bases[i].getRnaComplement());
+		for(int i = length-1; i >= 0; i--) {
+			strand.addNucleotideToEnd(bases[i].getRnaComplement());
 		}
 		return strand;
 	}
@@ -214,9 +214,9 @@ public class Strand {
 	public void draw(GraphicsContext gc) {
 		if(r!=0) {
 		    gc.save();
-		    gc.translate(x+50, y+50);
+		    gc.translate((int)(x+imageSize/2), (int)(y+imageSize/2));
 		    gc.rotate(r);
-		    gc.translate(-(x+50), -(y+50));
+		    gc.translate(-(int)(x+imageSize/2), -(int)(y+imageSize/2));
 		}
 		for(int i = 0; i < length; i++) {
 			if(bases[i] != null){

@@ -1,4 +1,4 @@
-package gameClasses;
+package nucleotides;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -19,7 +19,7 @@ public class Helix {
 		strand1 = strand;
 		strand2 = strand.getComplementaryDnaStrand();
 		x = strand1.getPos()[0];
-		y = (int)(strand1.getPos()[1]-imageSize*.9);
+		y = (int)(strand1.getPos()[1]-imageSize*.93);
 		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y,180);
 
 	}
@@ -27,7 +27,7 @@ public class Helix {
 		this.strand1 = strand1;
 		this.strand2 = strand2;
 		x = strand1.getPos()[0];
-		y = (int)(strand1.getPos()[1]-imageSize*.9);
+		y = (int)(strand1.getPos()[1]-imageSize*.93);
 		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y,180);
 		length = strand1.getLength();
 	}
@@ -39,7 +39,7 @@ public class Helix {
 	public void setPos(int x,int y) {
 		this.x = x;
 		this.y= y;
-		strand1.setPos(x, (int)(y+imageSize*.9));
+		strand1.setPos(x, (int)(y+imageSize*.93));
 		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y);
 	}
 	/**
