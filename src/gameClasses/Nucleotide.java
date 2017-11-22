@@ -13,8 +13,7 @@ public abstract class Nucleotide {
 	protected Image image;
 	protected ImageView iv;
 	//Todo: Scaling based on display window size
-	protected static int imageHeight = 100;
-	protected static int imageWidth = 100;
+	protected static int imageSize = 100;
 	/**
 	 * Acts as wrapper for Image representing the nucleotide.
 	 * @return an Image representing the nucleotide.
@@ -33,8 +32,8 @@ public abstract class Nucleotide {
 	 * Wrapper for static variables imageHeight and Width
 	 * @return int[2]: [Height,Width]
 	 */
-	public static int[] getImageSize(){
-		return new int[] {imageWidth,imageHeight};
+	public static int getImageSize(){
+		return imageSize;
 	}
 	/**
 	 * Draws the image representing the nucleotide on a graphics context.
