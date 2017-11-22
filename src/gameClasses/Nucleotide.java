@@ -12,6 +12,7 @@ public abstract class Nucleotide {
 	protected char base;
 	protected Image image;
 	protected ImageView iv;
+	//Todo: Scaling based on display window size
 	protected static int imageHeight = 100;
 	protected static int imageWidth = 100;
 	/**

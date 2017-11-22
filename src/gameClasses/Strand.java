@@ -8,12 +8,14 @@ import java.util.Random;
 public class Strand {
 	private Nucleotide[] bases;
 	private int length = 0;
-	private int[] bonds;
+	private boolean[] bonds;
+	private int[] imageSize = Nucleotide.getImageSize();
+	
 	public Strand(int length) {
 		bases = new Nucleotide[length];
-		bonds = new int[length];
+		bonds = new boolean[length];
 		for(int i = 0; i < length; i++){
-			bonds[i] = True;
+			bonds[i] = true;
 		}
 	}
 	/**
@@ -40,7 +42,7 @@ public class Strand {
 			return bases[pos];
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length");
+			throw new IllegalArgumentException("Expected pos to be less than length");
 		}
 	}
 	/**
@@ -53,9 +55,9 @@ public class Strand {
 			bonds[pos] = !bonds[pos];
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length");
+			throw new IllegalArgumentException("Expected pos to be less than length");
 		}
-	
+	}
 	/**
 	 * Adds dna or rna Nucleotide to strand
 	 * @param Nucleotide
@@ -74,7 +76,7 @@ public class Strand {
 			bases[pos]=null;
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length");
+			throw new IllegalArgumentException("Expected pos to be less than length");
 		}
 	}
 	/**
@@ -87,7 +89,7 @@ public class Strand {
 			bases[pos]=nucleotide;
 		}
 		else{
-			throw new IllegalArgumentException(""Expected pos to be less than length");
+			throw new IllegalArgumentException("Expected pos to be less than length");
 		}
 	}
 	/**
@@ -102,20 +104,20 @@ public class Strand {
 		Strand strand = new Strand(length);
 		for(int i = 0; i < length; i++) {
 			if(dnaRna.equals("dna")) {
-				switch(rand.nextInt(4)) {
-				case 0: strand.addNucleotide(new DnaNucleotide('A')); break;
-				case 1: strand.addNucleotide(new DnaNucleotide('T')); break;
-				case 2: strand.addNucleotide(new DnaNucleotide('G')); break;
-				case 3: strand.addNucleotide(new DnaNucleotide('C')); break;
-				}
-			}
-			else if (dnaRna.equals("rna")){
-				switch(rand.nextInt(4)) {
-				case 0: strand.addNucleotide(new RnaNucleotide('A')); break;
-				case 1: strand.addNucleotide(new RnaNucleotide('U')); break;
-				case 2: strand.addNucleotide(new RnaNucleotide('G')); break;
-				case 3: strand.addNucleotide(new RnaNucleotide('C')); break;
-				}
+				switch(rand.nextInt(4)) {   
+				case 0: strand.addNucleotideToEnd(new DnaNucleotide('A')); break;
+				case 1: strand.addNucleotideToEnd(new DnaNucleotide('T')); break;
+				case 2: strand.addNucleotideToEnd(new DnaNucleotide('G')); break;
+				case 3: strand.addNucleotideToEnd(new DnaNucleotide('C')); break;
+				}                           
+			}                               
+			else if (dnaRna.equals("rna")){ 
+				switch(rand.nextInt(4)) {   
+				case 0: strand.addNucleotideToEnd(new RnaNucleotide('A')); break;
+				case 1: strand.addNucleotideToEnd(new RnaNucleotide('U')); break;
+				case 2: strand.addNucleotideToEnd(new RnaNucleotide('G')); break;
+				case 3: strand.addNucleotideToEnd(new RnaNucleotide('C')); break;
+				}                           
 			}
 			else {
 				throw new IllegalArgumentException("Input must be \"dna\" or \"rna\" ");
@@ -131,7 +133,7 @@ public class Strand {
 		//Todo: Should be in inverse order so they match when new strand is printed with a 180 rotation
 		Strand strand = new Strand(length);
 		for(int i = 0; i < length; i++) {
-			strand.addNucleotide(bases[i].getDnaComplement());
+			strand.addNucleotideToEnd(bases[i].getDnaComplement());
 		}
 		return strand;
 	}
@@ -142,7 +144,7 @@ public class Strand {
 	public Strand getComplementaryRnaStrand() {
 		Strand strand = new Strand(length);
 		for(int i = 0; i < length; i++) {
-			strand.addNucleotide(bases[i].getRnaComplement());
+			strand .addNucleotideToEnd(bases[i].getRnaComplement());
 		}
 		return strand;
 	}
@@ -159,7 +161,8 @@ public class Strand {
 				if(i+1< length){
 					//todo add a way to specify two nucletides not to draw a line through
 					if(bases[i+1] != null && bonds[i]){
-						//draw line
+						gc.strokeLine(x+imageSize[0]*.81, y+imageSize[1]*.81, x+imageSize[0]*1.10, y+imageSize[1]*.73);
+						//gc.strokeLine(x, y, x+imageSize[0]*1.10, y+imageSize[1]*.73);
 					}
 				}
 			}
@@ -174,15 +177,13 @@ public class Strand {
 	 * @param r: Rotation in degrees to rotate strand
 	 */
 	public void draw(GraphicsContext gc, int x, int y, int r) {
-		double r2 = Math.toRadians(r+90);
-		int[] imageSize = Nucleotide.getImageSize();
-		for(int i = 0; i < length; i++) {
-			bases[i].draw(gc,x,y,r);
-			
-			x+=imageSize[0]*Math.sin(r2);
-			y+=imageSize[1]*Math.cos(r2);
-			
-		}
+	    gc.save();
+	    gc.translate(x+50, y+50);
+	    gc.rotate(r);
+	    gc.translate(-(x+50), -(y+50));
+	    this.draw(gc, x, y);
+	    gc.restore();
+
 	}
 	@Override
 	public String toString() {
