@@ -7,7 +7,8 @@ import java.util.Random;
  */
 public class Strand {
 	private Nucleotide[] bases;
-	private int length = 0;
+	private int length;
+	private int index = 0;
 	private boolean[] bonds;
 	private int imageSize = Nucleotide.getImageSize();
 	private int x;
@@ -25,8 +26,10 @@ public class Strand {
 		this.r = r;
 		bases = new Nucleotide[length];
 		bonds = new boolean[length];
+		this.length = length;
 		for(int i = 0; i < length; i++){
 			bonds[i] = true;
+			bases[i] = null;
 		}
 		
 	}
@@ -109,13 +112,20 @@ public class Strand {
 	 * @param Nucleotide
 	 */
 	public void addNucleotideToEnd(Nucleotide nucleotide) {
-		if(length < bases.length) {	
-			bases[length]= nucleotide;
-			length++;
+		if(index < length) {	
+			bases[index]= nucleotide;
+			index++;
 		}
 		else {
 			System.out.println("Strand full");
 		}
+	}
+	public void addNucleotideToStart(Nucleotide nucleotide) {
+		for(int i=length-1; i > 0; i--) {
+			bases[i] = bases[i-1];
+		}
+		bases[0] = nucleotide;
+		
 	}
 	/**
 	* Sets psotion to be empty
@@ -136,9 +146,8 @@ public class Strand {
 	* @param Nucleotide to put at pos
 	*/
 	public void addNucleotide(int pos, Nucleotide nucleotide){
-		if( pos < bases.length){
+		if( pos < length){
 			bases[pos]=nucleotide;
-			length++;
 		}
 		else{
 			throw new IllegalArgumentException("Expected pos to be less than length");

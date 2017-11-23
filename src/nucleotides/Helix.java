@@ -76,6 +76,22 @@ public class Helix {
 			throw new IllegalArgumentException("Expected 1 or 2");
 		}
 	}
+	public Strand[] unzip(int i) {
+		Strand strandr1 = new Strand(i);
+		Strand strandr2 = new Strand(i);
+    	strandr1.addNucleotideToEnd(strand2.getNucleotide(i));
+    	strand1.removeNucleotide(i);
+    	strandr2.addNucleotideToStart(strand1.getNucleotide(length-i-1));
+    	strand2.removeNucleotide(length-i-1);
+    	int x2 = 70*i+25;
+    	//I wrote this at 4am and have no idea what it does but it works
+    	int h = Nucleotide.getImageSize()*(i+1);
+		x=x-10+h - (int)(h*Math.cos(Math.toRadians(-30)));
+		y=y-30+h + (int)(h*Math.sin(Math.toRadians(-30)));
+		strandr1.setPos(x2, 300-(int)(70*.93),210);
+		strandr2.setPos(x, y,-30);
+		return new Strand[] {strandr1,strandr2};
+	}
 	/*
 	 * Todo:
 	 * Input protection: clone strands before storing them
