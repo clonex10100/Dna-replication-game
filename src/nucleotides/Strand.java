@@ -69,7 +69,7 @@ public class Strand {
 	 * @return int length
 	 */
 	public int getLength(){
-		return bases.length;
+		return length;
 	}
 	/**
 	 * Wrapper for array of bases in strand
@@ -109,8 +109,13 @@ public class Strand {
 	 * @param Nucleotide
 	 */
 	public void addNucleotideToEnd(Nucleotide nucleotide) {
-		bases[length]= nucleotide;
-		length++;
+		if(length < bases.length) {	
+			bases[length]= nucleotide;
+			length++;
+		}
+		else {
+			System.out.println("Strand full");
+		}
 	}
 	/**
 	* Sets psotion to be empty
@@ -131,8 +136,9 @@ public class Strand {
 	* @param Nucleotide to put at pos
 	*/
 	public void addNucleotide(int pos, Nucleotide nucleotide){
-		if( pos < length && bases[pos] == null){
+		if( pos < bases.length){
 			bases[pos]=nucleotide;
+			length++;
 		}
 		else{
 			throw new IllegalArgumentException("Expected pos to be less than length");
@@ -239,6 +245,7 @@ public class Strand {
 	 * @param gc: GraphicsContext on which to draw strand
 	 */
 	public void draw(GraphicsContext gc) {
+		int x2 = x;
 		if(r!=0) {
 		    gc.save();
 		    gc.translate((int)(x+imageSize/2), (int)(y+imageSize/2));
@@ -247,14 +254,14 @@ public class Strand {
 		}
 		for(int i = 0; i < length; i++) {
 			if(bases[i] != null){
-				bases[i].draw(gc,x,y);
+				bases[i].draw(gc,x2,y);
 				if(i+1< length){
 					if(bases[i+1] != null && bonds[i]){
-						gc.strokeLine(x+imageSize*.81, y+imageSize*.81, x+imageSize*1.10, y+imageSize*.73);
+						gc.strokeLine(x2+imageSize*.81, y+imageSize*.81, x2+imageSize*1.10, y+imageSize*.73);
 					}
 				}
 			}
-			x+=imageSize;
+			x2+=imageSize;
 		}
 		if(r!=0) {
 			gc.restore();

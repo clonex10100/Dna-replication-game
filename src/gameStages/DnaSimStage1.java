@@ -36,35 +36,51 @@ public class DnaSimStage1 extends Application {
 		final Canvas canvas = new Canvas(1000, 500);
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Strand dna = Strand.getRandomStrand(10,"dna");
-		dna.setPos(100+10*Nucleotide.getImageSize(), 300,180);
-		dna.draw(gc);
-		Strand strand = dna.splitStrand(3);
-		dna.draw(gc);
-		int h = Nucleotide.getImageSize()*(strand.getLength()+1);
-		int x=(100+10*Nucleotide.getImageSize())+h - (int)(h*Math.cos(Math.toRadians(150)))-30;
-		int y=300+h + (int)(h*Math.sin(Math.toRadians(210)))-60;
-		System.out.println(h);
-		System.out.println(x);
-		System.out.println(y);
-		strand.setPos(x, y,150);
-		strand.draw(gc);
-		System.out.println(dna);
-		Helix helix = new Helix(dna);
-		helix.setPos(0, 400);
+		Strand dna = Strand.getRandomStrand(7,"dna");
+		Strand dna2 = dna.getComplementaryDnaStrand();
+		dna.setPos(500, 100,180);
+		dna2.setPos(100, 300);
+		Strand strand = new Strand(10);
+		Strand strand2 = new Strand(10);
+		//int x=(20+10*Nucleotide.getImageSize()) + (int)(h*Math.cos(Math.toRadians(-30)))-30;
+		//int y=-300+h - (int)(h*Math.sin(Math.toRadians(-30)))+60;
 		stage.setScene(scene);
 		stage.show();
 		
 	    new AnimationTimer()
 	    {
-	    	int x=0;
+	    	int i=0;
+	    	long lastNano = 0;
+	    	int x2 = 0;
+	    	int x = 0;
+	    	int y = 0;
 	        public void handle(long currentNanoTime)
-	        {
-	            // Clear the canvas
-	            //gc.setFill( new Color(1,1,1, 1.0) );
-	            //gc.fillRect(0,0, 1010,512);
-	            x+=1;
-	           
+	        {	
+
+	    		if(currentNanoTime - lastNano > 900000000) {
+		            if(i<7) {
+			        	strand.addNucleotide(i,dna.getNucleotide(6-i));
+			        	dna.removeNucleotide(6-i);
+			        	strand2.addNucleotideToEnd(dna2.getNucleotide(i));
+			        	dna2.removeNucleotide(i);
+			        	x2 += Nucleotide.getImageSize();
+			        	//I wrote this at 4am and have no idea what it does but it works
+			        	int h = Nucleotide.getImageSize()*(strand2.getLength());
+			    		x=100+h - (int)(h*Math.cos(Math.toRadians(-30)));
+			    		y=260+h + (int)(h*Math.sin(Math.toRadians(-30)));
+		            	i++;
+		            }
+	    			strand.setPos(x2, 100,210);
+	    			strand2.setPos(x, y,-30);
+	    			gc.setFill(new Color(1,1,1, 1.0) );
+	    			gc.fillRect(0,0, 1010,512);
+	    			dna.draw(gc);
+	    			dna2.draw(gc);
+	    			strand.draw(gc);
+	    			strand2.draw(gc);	    
+	    			//dna.draw(gc);
+	    			lastNano = currentNanoTime;
+	    		}
 	        }
 	    }.start();
 		
