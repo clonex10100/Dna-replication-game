@@ -152,6 +152,23 @@ public class Strand {
 		}
 	}
 	/**
+	 * Splits strand into 2
+	 * @params pos- returns strand[0:pos]
+	 */
+	public Strand splitStrand(int pos) {
+		if( pos <= length){
+			Strand strand = new Strand(pos,x,y,r);
+			for(int i = 0; i < pos; i++) {
+				strand.addNucleotideToEnd(bases[i]);
+				this.removeNucleotide(i);
+			}
+			return strand;
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
 	 * Generates a random strand of rna or dna
 	 * @param length: Length of strand
 	 * @param dnaRna: String "rna" or "dna" specifying whether the nucleotides generated
@@ -192,7 +209,12 @@ public class Strand {
 		//Todo: Should be in inverse order so they match when new strand is printed with a 180 rotation
 		Strand strand = new Strand(length);
 		for(int i = length-1; i >= 0; i--) {
-			strand.addNucleotideToEnd(bases[i].getDnaComplement());
+			if(bases[i]!= null) {
+				strand.addNucleotideToEnd(bases[i].getDnaComplement());
+			}
+			else {
+				strand.addNucleotideToEnd(null);
+			}
 		}
 		return strand;
 	}
@@ -203,7 +225,12 @@ public class Strand {
 	public Strand getComplementaryRnaStrand() {
 		Strand strand = new Strand(length);
 		for(int i = length-1; i >= 0; i--) {
-			strand.addNucleotideToEnd(bases[i].getRnaComplement());
+			if(bases[i]!= null) {
+				strand.addNucleotideToEnd(bases[i].getDnaComplement());
+			}
+			else {
+				strand.addNucleotideToEnd(null);
+			}
 		}
 		return strand;
 	}
@@ -237,7 +264,12 @@ public class Strand {
 	public String toString() {
 		String result = "";
 		for(int i = 0; i < length; i++) {
-			result += bases[i].toString();
+			if(bases[i] == null) {
+				result += "_";
+			}
+			else {
+				result += bases[i].toString();
+			}
 		}
 		return result;
 	}

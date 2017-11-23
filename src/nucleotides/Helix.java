@@ -40,7 +40,7 @@ public class Helix {
 		this.x = x;
 		this.y= y;
 		strand1.setPos(x, (int)(y+imageSize*.93));
-		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y);
+		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.18),y);
 	}
 	/**
 	 * Gets x, y and rotation of helix

@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import nucleotides.Helix;
+import nucleotides.Nucleotide;
 import nucleotides.Strand;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.StackPane;
@@ -36,22 +37,32 @@ public class DnaSimStage1 extends Application {
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		Strand dna = Strand.getRandomStrand(10,"dna");
-		dna.setPos(100, 300);
+		dna.setPos(100+10*Nucleotide.getImageSize(), 300,180);
+		dna.draw(gc);
+		Strand strand = dna.splitStrand(3);
+		dna.draw(gc);
+		int h = Nucleotide.getImageSize()*(strand.getLength()+1);
+		int x=(100+10*Nucleotide.getImageSize())+h - (int)(h*Math.cos(Math.toRadians(150)))-30;
+		int y=300+h + (int)(h*Math.sin(Math.toRadians(210)))-60;
+		System.out.println(h);
+		System.out.println(x);
+		System.out.println(y);
+		strand.setPos(x, y,150);
+		strand.draw(gc);
 		System.out.println(dna);
 		Helix helix = new Helix(dna);
 		helix.setPos(0, 400);
 		stage.setScene(scene);
-		stage.show();      
+		stage.show();
+		
 	    new AnimationTimer()
 	    {
 	    	int x=0;
 	        public void handle(long currentNanoTime)
 	        {
 	            // Clear the canvas
-	            gc.setFill( new Color(1,1,1, 1.0) );
-	            gc.fillRect(0,0, 1010,512);
-	            helix.setPos(x,200);
-	            helix.draw(gc);
+	            //gc.setFill( new Color(1,1,1, 1.0) );
+	            //gc.fillRect(0,0, 1010,512);
 	            x+=1;
 	           
 	        }
