@@ -34,163 +34,6 @@ public class Strand {
 		
 	}
 	/**
-	 * Sets the position of the strands left most corner with default rotation
-	 * @param x x pos
-	 * @param y y pos
-	 */
-	public void setPos(int x,int y){
-		this.x=x;
-		this.y=y;		
-	}
-	/**
-	 * Sets the position of the strands left most corner with default rotation
-	 * @param x x pos
-	 * @param y y pos
-	 * @param r rotation 0= straight left
-	 */
-	public void setPos(int x,int y,int r){
-		this.x=x;
-		this.y=y;
-		this.r=r;
-	}
-	/**
-	 * Sets the rotation
-	 * @param r rotation
-	 */
-	public void setRotation(int r) {
-		this.r = r;
-	}
-	/**
-	 * Wrapper for rotation of nucleotide
-	 * @return int rotation
-	 */
-	public int getRotation() {
-		return r;
-	}
-	/**
-	 * Wrapper for strand position
-	 * @return Int[2] x,y
-	 */
-	public int[] getPos() {
-		return new int[] {x,y,r};
-	}
-	/**
-	 * Wrapper for length of Strand
-	 * @return int length
-	 */
-	public int getLength(){
-		return length;
-	}
-	/**
-	 * Wrapper for array of bases in strand
-	 * @return Array of nucleotides in strand
-	 */
-	public Nucleotide[] getBases() {
-		return bases.clone();
-	}
-	/**
-	* Returns Nucleotide at specified position
-	* @param pos int of the index you want the nucleotide of
-	* @return Nucleotide at pos in strand
-	*/
-	public Nucleotide getNucleotide(int pos){
-		if( pos < length){
-			return bases[pos];
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	*Toggles whether the bond between the 3 prime end of this nucleotide 
-	*and the 5 prime end of the next one is broken or not
-	*@param Pos. Position of nucleotide that the bond is attatched to the suger
-	*/
-	public void toggleBond(int pos){
-		if( pos < length){
-			bonds[pos] = !bonds[pos];
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	 * Adds dna or rna Nucleotide to strand
-	 * @param Nucleotide
-	 */
-	public void addNucleotideToEnd(Nucleotide nucleotide) {
-		if(index < length) {	
-			bases[index]= nucleotide;
-			index++;
-		}
-		else {
-			System.out.println("Strand full");
-		}
-	}
-	public void addNucleotideToStart(Nucleotide nucleotide) {
-		for(int i=length-1; i > 0; i--) {
-			bases[i] = bases[i-1];
-		}
-		bases[0] = nucleotide;
-		
-	}
-	/**
-	* Sets psotion to be empty
-	* @param Pos: Index you want to remove
-	*/
-	public void removeNucleotide(int pos){
-		//add input sanitisations
-		if( pos < length){
-			bases[pos]=null;
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	*Sets nucleotide at specified position to specified nucleotide
-	* @param Pos, position to replace
-	* @param Nucleotide to put at pos
-	*/
-	public void addNucleotide(int pos, Nucleotide nucleotide){
-		if( pos < length){
-			bases[pos]=nucleotide;
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	 * Swaps nucleotide at position with specified nucleotide
-	 * @params nucleotide- nucleotide to insert
-	 * @params pos- pos to swap nucleotide in
-	 */
-	public void swapNucleotide(int pos, Nucleotide nucleotide) {
-		if( pos < length){
-			bases[pos]=nucleotide;
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	 * Splits strand into 2
-	 * @params pos- returns strand[0:pos]
-	 */
-	public Strand splitStrand(int pos) {
-		if( pos <= length){
-			Strand strand = new Strand(pos,x,y,r);
-			for(int i = 0; i < pos; i++) {
-				strand.addNucleotideToEnd(bases[i]);
-				this.removeNucleotide(i);
-			}
-			return strand;
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
 	 * Generates a random strand of rna or dna
 	 * @param length: Length of strand
 	 * @param dnaRna: String "rna" or "dna" specifying whether the nucleotides generated
@@ -255,6 +98,150 @@ public class Strand {
 			}
 		}
 		return strand;
+	}
+	/**
+	 * Wrapper for length of Strand
+	 * @return int length
+	 */
+	public int getLength(){
+		return length;
+	}
+	/**
+	 * Wrapper for strand position
+	 * @return Int[2] x,y
+	 */
+	public int[] getPos() {
+		return new int[] {x,y,r};
+	}
+	/**
+	 * Wrapper for rotation of nucleotide
+	 * @return int rotation
+	 */
+	public int getRotation() {
+		return r;
+	}
+	/**
+	 * Wrapper for array of bases in strand
+	 * @return Array of nucleotides in strand
+	 */
+	public Nucleotide[] getBases() {
+		return bases.clone();
+	}
+	/**
+	* Returns Nucleotide at specified position
+	* @param pos int of the index you want the nucleotide of
+	* @return Nucleotide at pos in strand
+	*/
+	public Nucleotide getNucleotide(int pos){
+		if( pos < length){
+			return bases[pos];
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
+	 * Sets the position of the strands left most corner with default rotation
+	 * @param x x pos
+	 * @param y y pos
+	 */
+	public void setPos(int x,int y){
+		this.x=x;
+		this.y=y;		
+	}
+	/**
+	 * Sets the position of the strands left most corner with default rotation
+	 * @param x x pos
+	 * @param y y pos
+	 * @param r rotation 0= straight left
+	 */
+	public void setPos(int x,int y,int r){
+		this.x=x;
+		this.y=y;
+		this.r=r;
+	}
+	/**
+	 * Sets the rotation
+	 * @param r rotation
+	 */
+	public void setRotation(int r) {
+		this.r = r;
+	}
+	/**
+	*Sets nucleotide at specified position to specified nucleotide
+	* @param Pos, position to replace
+	* @param Nucleotide to put at pos
+	*/
+	public void setNucleotide(int pos, Nucleotide nucleotide){
+		if( pos < length){
+			bases[pos]=nucleotide;
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
+	* Sets psotion to be empty
+	* @param Pos: Index you want to remove
+	*/
+	public void removeNucleotide(int pos){
+		//add input sanitisations
+		if( pos < length){
+			bases[pos]=null;
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	public void addNucleotideToStart(Nucleotide nucleotide) {
+		for(int i=length-1; i > 0; i--) {
+			bases[i] = bases[i-1];
+		}
+		bases[0] = nucleotide;
+		
+	}
+	/**
+	 * Adds dna or rna Nucleotide to strand
+	 * @param Nucleotide
+	 */
+	public void addNucleotideToEnd(Nucleotide nucleotide) {
+		if(index < length) {	
+			bases[index]= nucleotide;
+			index++;
+		}
+		else {
+			System.out.println("Strand full");
+		}
+	}
+	/**
+	*Toggles whether the bond between the 3 prime end of this nucleotide 
+	*and the 5 prime end of the next one is broken or not
+	*@param Pos. Position of nucleotide that the bond is attatched to the suger
+	*/
+	public void toggleBond(int pos){
+		if( pos < length){
+			bonds[pos] = !bonds[pos];
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
+	 * Splits strand into 2
+	 * @params pos- returns strand[0:pos]
+	 */
+	public Strand splitStrand(int pos) {
+		if( pos <= length){
+			Strand strand = new Strand(pos,x,y,r);
+			for(int i = 0; i < pos; i++) {
+				strand.addNucleotideToEnd(bases[i]);
+				this.removeNucleotide(i);
+			}
+			return strand;
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
 	}
 	/**
 	 * Draws all nucleotides in strand from left to right
