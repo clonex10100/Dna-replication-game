@@ -3,7 +3,6 @@ package gameStages;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nucleotides.Helix;
 import nucleotides.Nucleotide;
 import nucleotides.Strand;
 import javafx.scene.canvas.*;
@@ -13,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.Scene;
 
 
-public class DnaSimStage1 extends Application {
+public class UnzipTesting extends Application {
 	public static void main(String[] args){
 		launch(args);	
 	}
@@ -36,13 +35,16 @@ public class DnaSimStage1 extends Application {
 		final Canvas canvas = new Canvas(1000, 500);
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Strand dna = Strand.getRandomStrand(7,"dna");
+		Strand dna = Strand.getRandomStrand(3,"dna");
 		Strand dna2 = dna.getComplementaryDnaStrand();
-		//Dna upsidown, dna2 rightside up
-		dna.setPos((int)(100+70*(6)+70*.17), 300-(int)(70*.93),180);
-		dna2.setPos(100, 300);
-		Strand strand = new Strand(7);
-		Strand strand2 = new Strand(7);
+		//Dna upsidown, dna2 rightside 
+		int a = 3;
+		int xs = 10;
+		int ys = 400;
+		dna.setPos((int)(xs+70*(a)+13), ys,180);
+		dna2.setPos(xs, ys);
+		Strand strand = new Strand(a);
+		Strand strand2 = new Strand(a);
 		//int x=(20+10*Nucleotide.getImageSize()) + (int)(h*Math.cos(Math.toRadians(-30)))-30;
 		//int y=-300+h - (int)(h*Math.sin(Math.toRadians(-30)))+60;
 		stage.setScene(scene);
@@ -52,27 +54,26 @@ public class DnaSimStage1 extends Application {
 	    {
 	    	int i=0;
 	    	long lastNano = 0;
-	    	int x2 = 25;
-	    	int x = 0;
-	    	int y = 0;
+	    	int x2 = xs;
+	    	int x;
+	    	int y;
 	        public void handle(long currentNanoTime)
 	        {	
 
 	    		if((currentNanoTime - lastNano) > 900000000) {
-		            if(i<7) {
-			        	strand.addNucleotideToStart(dna.getNucleotide(6-i));
-			        	dna.removeNucleotide(6-i);
-			        	System.out.println(strand);
+		            if(i<a) {
+			        	strand.addNucleotideToStart(dna.getNucleotide(a-1-i));
+			        	dna.removeNucleotide(a-1-i);
 			        	strand2.addNucleotideToEnd(dna2.getNucleotide(i));
 			        	dna2.removeNucleotide(i);
 			        	x2 += 70;
 			        	//I wrote this at 4am and have no idea what it does but it works
 			        	int h = Nucleotide.getImageSize()*(i+1);
-			    		x=70+h - (int)(h*Math.cos(Math.toRadians(-30)));
-			    		y=270+h + (int)(h*Math.sin(Math.toRadians(-30)));
+			    		x=(int)xs+h - (int)(h*Math.cos(Math.toRadians(-30)));
+			    		y=(int)ys+h + (int)(h*Math.sin(Math.toRadians(-30)));
 		            	i++;
 		            }
-	    			strand.setPos(x2, 300-(int)(70*.93),210);
+	    			strand.setPos(x2, ys,210);
 	    			strand2.setPos(x, y,-30);
 	    			gc.setFill(new Color(1,1,1, 1.0) );
 	    			gc.fillRect(0,0, 1010,512);

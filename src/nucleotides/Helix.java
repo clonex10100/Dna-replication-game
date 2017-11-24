@@ -8,28 +8,30 @@ import javafx.scene.canvas.GraphicsContext;
  *
  */
 public class Helix {
-	Strand strand1;
-	Strand strand2;
-	int imageSize = Nucleotide.getImageSize();
-	int length;
-	int x;
-	int y;
-	public Helix(Strand strand) {
-		length = strand.getLength();
-		strand1 = strand;
-		strand2 = strand.getComplementaryDnaStrand();
-		x = strand1.getPos()[0];
-		y = (int)(strand1.getPos()[1]-imageSize*.93);
-		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y,180);
-
+	private Strand strand1;
+	private Strand strand2;
+	private static int imageSize = Nucleotide.getImageSize();
+	private int length;
+	private int x;
+	private int y;
+	private int r;
+	//values to shift x and y by on upsidedown strand to get
+	//both strands to vissualy line up.
+	private static double XSHIFT = 12;
+	private static double YSHIFT = imageSize*0.07;
+	public Helix(Strand strand,boolean generateComplementaryStrand) {
+		this(strand, generateComplementaryStrand ? strand.getComplementaryDnaStrand():new Strand(strand.getLength()));
+		
 	}
 	public Helix(Strand strand1,Strand strand2) {
 		this.strand1 = strand1;
 		this.strand2 = strand2;
-		x = strand1.getPos()[0];
-		y = (int)(strand1.getPos()[1]-imageSize*.93);
-		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.17),y,180);
-		length = strand1.getLength();
+		this.length = strand1.getLength();
+		int[] pos = strand1.getPos();
+		x = pos[0];
+		y = pos[1];
+		r = pos[2];
+		this.updateStrandPos();
 	}
 	/**
 	 * Sets the position of helix from the top left
@@ -38,9 +40,14 @@ public class Helix {
 	 */
 	public void setPos(int x,int y) {
 		this.x = x;
-		this.y= y;
-		strand1.setPos(x, (int)(y+imageSize*.93));
-		strand2.setPos((int)(x+imageSize*(length-1)+imageSize*.18),y);
+		this.y= y+imageSize;
+		this.updateStrandPos();
+
+	}
+	private void updateStrandPos() {
+		System.out.println(this.y);
+		strand1.setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT),r);
+		strand2.setPos(this.x+(int)(imageSize*length),this.y,180);
 	}
 	/**
 	 * Gets x, y and rotation of helix
@@ -48,7 +55,7 @@ public class Helix {
 	 * @return y- right most coord
 	 */
 	public int[] getPos() {
-		return new int[] {x,y};
+		return new int[] {x,y-imageSize,r};
 	}
 	/**
 	 * Draws both strands next to each other
@@ -57,8 +64,18 @@ public class Helix {
 	 * @param y- upper start of the drawing
 	 */
 	public void draw(GraphicsContext gc) {
+	    gc.save();
+	    gc.translate(x, y-imageSize);
+	    gc.rotate(r);
+	    gc.translate(-x, -(y-imageSize));
 		strand1.draw(gc);
 		strand2.draw(gc);
+		gc.restore();
+	}
+	public void setPos(int x,int y,int r) {
+		this.x = x;
+		this.y = y;
+		this.r = r;
 	}
 	/**
 	 * Get nucleotide

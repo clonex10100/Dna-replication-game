@@ -61,11 +61,18 @@ public class Strand {
 		this.r = r;
 	}
 	/**
+	 * Wrapper for rotation of nucleotide
+	 * @return int rotation
+	 */
+	public int getRotation() {
+		return r;
+	}
+	/**
 	 * Wrapper for strand position
 	 * @return Int[2] x,y
 	 */
 	public int[] getPos() {
-		return new int[] {x,y};
+		return new int[] {x,y,r};
 	}
 	/**
 	 * Wrapper for length of Strand
@@ -257,9 +264,9 @@ public class Strand {
 		int x2 = x;
 		if(r!=0) {
 		    gc.save();
-		    gc.translate((int)(x+imageSize/2), (int)(y+imageSize/2));
+		    gc.translate(x, y);
 		    gc.rotate(r);
-		    gc.translate(-(int)(x+imageSize/2), -(int)(y+imageSize/2));
+		    gc.translate(-x, -y);
 		}
 		for(int i = 0; i < length; i++) {
 			if(bases[i] != null){
