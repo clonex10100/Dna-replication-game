@@ -29,8 +29,8 @@ public abstract class Nucleotide {
 		return base;
 	}
 	/**
-	 * Wrapper for static variables imageHeight and Width
-	 * @return int[2]: [Height,Width]
+	 * Wrapper for the length of one sde of the image representing the nucleotide.
+	 * @return int representing the length of the sides of nucleotide image.
 	 */
 	public static int getImageSize(){
 		return imageSize;

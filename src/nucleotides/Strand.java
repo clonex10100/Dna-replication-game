@@ -71,7 +71,6 @@ public class Strand {
 	 * @return New strand
 	 */
 	public Strand getComplementaryDnaStrand() {
-		//Todo: Should be in inverse order so they match when new strand is printed with a 180 rotation
 		Strand strand = new Strand(length);
 		for(int i = length-1; i >= 0; i--) {
 			if(bases[i]!= null) {
@@ -108,7 +107,7 @@ public class Strand {
 	}
 	/**
 	 * Wrapper for strand position
-	 * @return Int[2] x,y
+	 * @return Int[3] x,y,r
 	 */
 	public int[] getPos() {
 		return new int[] {x,y,r};
@@ -181,11 +180,10 @@ public class Strand {
 		}
 	}
 	/**
-	* Sets psotion to be empty
+	* Sets postion to be empty
 	* @param Pos: Index you want to remove
 	*/
 	public void removeNucleotide(int pos){
-		//add input sanitisations
 		if( pos < length){
 			bases[pos]=null;
 		}
