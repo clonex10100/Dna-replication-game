@@ -37,10 +37,13 @@ public class Helicase {
 				if(index <LENGTH) {
 					c.setCenterX(c.getCenterX() + offset);
 					if(t.getSceneX()-Nucleotide.getImageSize()-20 > lzip ) {
-						machine.unzip();
-						System.out.println(lzip);
+						double h = t.getSceneX();
+						while(h-Nucleotide.getImageSize()-20>lzip&&index<LENGTH) {
+							machine.unzip();
+							h-=Nucleotide.getImageSize()-20;
+							index++;
+						}
 						lzip = t.getSceneX()-20;
-						index++;
 					}
 				}
 				else {
