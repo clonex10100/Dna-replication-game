@@ -28,27 +28,22 @@ public class Helicase {
 		    c.toFront();
 		});
 		circle.setOnMouseDragged((t) -> {
-			double offset = t.getSceneX() - cxs;
-			if(offset > Nucleotide.getImageSize()) {
-				offset = Nucleotide.getImageSize();
-			}
 			Circle c = (Circle) (t.getSource());
-			if(offset > 0 ) {
-				if(index <LENGTH) {
-					c.setCenterX(c.getCenterX() + offset);
-					if(t.getSceneX()-Nucleotide.getImageSize()-20 > lzip ) {
-						double h = t.getSceneX();
-						while(h-Nucleotide.getImageSize()-20>lzip&&index<LENGTH) {
-							machine.unzip();
-							h-=Nucleotide.getImageSize()-20;
-							index++;
-						}
-						lzip = t.getSceneX()-20;
-					}
+			double offset = t.getSceneX() - cxs;
+			if(t.getSceneX()+offset>XS+Nucleotide.getImageSize()*LENGTH) {
+				c.setCenterX(XS+Nucleotide.getImageSize()*LENGTH);
+				while(index<LENGTH) {
+					machine.unzip();
+					index++;
 				}
-				else {
-					c.setCenterX(XS + index*Nucleotide.getImageSize());
-				}
+			}
+			else if(offset > 0 && index < LENGTH) {
+				c.setCenterX(c.getCenterX() + offset);
+				if(c.getCenterX()-Nucleotide.getImageSize()-20 > lzip ) {	
+						machine.unzip();
+						lzip = lzip+Nucleotide.getImageSize();
+						index++;			
+				}	
 			}
 			cxs = t.getSceneX();
 		});

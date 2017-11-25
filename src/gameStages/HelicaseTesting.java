@@ -35,8 +35,8 @@ public class HelicaseTesting extends Application{
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		int a = 10;
-		int xs = 100;
-		int ys = 100;
+		int xs = 400;
+		int ys = 300;
 		Helix original = new Helix(Strand.getRandomStrand(a, "dna"),true);
 		original.setPos(xs, ys);
 		Machine circle = new Machine(original,root);
