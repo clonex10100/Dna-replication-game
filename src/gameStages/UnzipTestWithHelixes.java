@@ -20,7 +20,7 @@ public class UnzipTestWithHelixes extends Application {
 	}
 	@Override
 	public void start(Stage stage) {
-		StackPane root = new StackPane();
+		StackPane root = new StackPane();	
 		Scene scene = new Scene(root);
 		final Canvas canvas = new Canvas(1000, 500);
 		root.getChildren().add(canvas);
