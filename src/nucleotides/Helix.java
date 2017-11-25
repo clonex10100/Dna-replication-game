@@ -20,8 +20,7 @@ public class Helix {
 	private static double XSHIFT = 12;
 	private static double YSHIFT = imageSize*0.07;
 	private void updateStrandPos() {
-		System.out.println(this.y);
-		strand1.setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT),r);
+		strand1.setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT));
 		strand2.setPos(this.x+(int)(imageSize*length),this.y,180);
 	}
 	public Helix(Strand strand,boolean generateComplementaryStrand) {
@@ -85,8 +84,9 @@ public class Helix {
 	}
 	public void setPos(int x,int y,int r) {
 		this.x = x;
-		this.y = y;
+		this.y = y+imageSize;
 		this.r = r;
+		this.updateStrandPos();
 	}
 	/**
 	 * Sets nucleotide in specified strand at specified position
@@ -104,6 +104,7 @@ public class Helix {
 		else {
 			throw new IllegalArgumentException("Expected 1 or 2");
 		}
+		this.updateStrandPos();
 	}
 	/**
 	 * Removes nucleotide in specified strand at specified postion
@@ -128,10 +129,10 @@ public class Helix {
 	 */
 	public void addNucleotideToStart(int strand, Nucleotide nucleotide) {
 		if(strand ==1) {
-			
+			strand1.addNucleotideToStart(nucleotide);
 		}
 		else if(strand ==2) {
-			
+			strand2.addNucleotideToStart(nucleotide);
 		}
 		else {
 			throw new IllegalArgumentException("Expected 1 or 2");
