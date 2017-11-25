@@ -154,6 +154,11 @@ public class Helix {
 			throw new IllegalArgumentException("Expected 1 or 2");
 		}
 	}
+	/**
+	 * Toggles the bond between two nucleotides on the specified strand
+	 * @param strand- int 1 or 2
+	 * @param pos- pos > 0 and pos < length
+	 */
 	public void toggleBond(int strand, int pos) {
 		if(strand ==1) {
 			strand1.toggleBond(pos);
