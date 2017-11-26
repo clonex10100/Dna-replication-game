@@ -34,10 +34,10 @@ public class HelicaseTesting extends Application{
 		final Canvas canvas = new Canvas(1000, 500);
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		int a = 10;
-		int xs = 400;
-		int ys = 300;
-		Helix original = new Helix(Strand.getRandomStrand(a, "dna"),true);
+		int length = 10;
+		int xs = 50;
+		int ys = 200;
+		Helix original = new Helix(Strand.getRandomStrand(length, "dna"),true);
 		original.setPos(xs, ys);
 		Machine circle = new Machine(original,root);
 		stage.setScene(scene);
