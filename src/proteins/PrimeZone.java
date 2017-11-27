@@ -26,7 +26,7 @@ public class PrimeZone{
        return true; 
     }
     else{
-      return falsez
+      return false;
     }
   }
 }
