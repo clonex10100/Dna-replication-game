@@ -33,7 +33,7 @@ public class Machine {
 		LENGTH = helix.getLength();
 		xs = pos[0]-Nucleotide.getImageSize();
 		ys= pos[1]+Nucleotide.getImageSize();
-    	x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
+    		x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
 	   	y2 = ys - (int)(Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30)))-25; 
 		this.helix = helix;
 		upperHelix = new Helix(new Strand(LENGTH),false);
@@ -46,8 +46,8 @@ public class Machine {
 	public void unzip(){
 		upperHelix.addNucleotideToStart(2,helix.getNucleotide(2,LENGTH-1-index));
 		helix.removeNucleotide(2,LENGTH-index-1);
-	    lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
-	    helix.removeNucleotide(1,index);
+	    	lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
+	   	 helix.removeNucleotide(1,index);
 		int h = Nucleotide.getImageSize()*(index+1);
 		x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
 		y1=(int)ys+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
