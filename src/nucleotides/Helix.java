@@ -177,10 +177,10 @@ public class Helix {
 	 * @param y- upper start of the drawing
 	 */
 	public void draw(GraphicsContext gc) {
-	    gc.save();
-	    gc.translate(x, y-imageSize);
-	    gc.rotate(r);
-	    gc.translate(-x, -(y-imageSize));
+		gc.save();
+	    	gc.translate(x, y-imageSize);
+	    	gc.rotate(r);
+	    	gc.translate(-x, -(y-imageSize));
 		strand1.draw(gc);
 		strand2.draw(gc);
 		gc.restore();
