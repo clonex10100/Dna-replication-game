@@ -34,14 +34,14 @@ public class Machine {
 		LENGTH = helix.getLength();
 		xs = pos[0]-Nucleotide.getImageSize();
 		ys= pos[1]+Nucleotide.getImageSize();
-    	x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
-	   	y2 = ys - (int)(Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30)))-25;
+    x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
+	  y2 = ys-(int)(Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30)))-25;
 		this.helix = helix;
 		upperHelix = new Helix(new Strand(LENGTH),false);
 		lowerHelix = new Helix(new Strand(LENGTH),false);
-		helicase = new Helicase(xs, ys,LENGTH,this,root);
+		helicase = new Helicase(xs, ys,6,this,root);
 		man = new PrimeZoneManager();
-		man.addZone(0,new PrimeZone(new int[] {500,300},new int[] {0,1,3},upperHelix,lowerHelix));
+		man.addZone(0,new PrimeZone(new int[] {-500,-300},new int[] {0,1,3},upperHelix,lowerHelix));
 		new Primase(100,100,man,root);
 	}
 	/**
@@ -51,8 +51,8 @@ public class Machine {
 		//Swap the nucleotides
 		upperHelix.addNucleotideToStart(2,helix.getNucleotide(2,LENGTH-1-index));
 		helix.removeNucleotide(2,LENGTH-index-1);
-	    lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
-	   	helix.removeNucleotide(1,index);
+	  lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
+	  helix.removeNucleotide(1,index);
 	   	//Edit the positions accounting for swapped nucleotides
 		int h = Nucleotide.getImageSize()*(index+1);
 		x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
@@ -61,6 +61,21 @@ public class Machine {
 		upperHelix.setPos(x2, y2,30);
 		lowerHelix.setPos(x1, y1,-30);
 		index++;
+	}
+	/**
+	*Strand is one or two
+	*Pos is how many nucleotides away from Helicase
+	*/
+	public void addZone(int helix,int strand, int pos){
+		System.out.println(helicase.getPos());
+		System.out.println(Nucleotide.getImageSize()*pos*Math.cos(Math.toRadians(30)));
+		double x = helicase.getPos()-Nucleotide.getImageSize()*pos*Math.cos(Math.toRadians(helix == 1 ? 30:-30));
+		double y = ys + Nucleotide.getImageSize()*pos*Math.sin(Math.toRadians(helix == 1 ? 30:-30));
+		System.out.println(x);
+		 man.addZone(0, new PrimeZone(new int[]{(int)(x),(int)(y)},new int[]{helix,strand,pos},upperHelix,lowerHelix));
+	}
+	public boolean isUnzipped() {
+		return helicase.isUnzipped();
 	}
 	/**
 	 * Draws all the helixes the machine controls.

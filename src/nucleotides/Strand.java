@@ -13,7 +13,7 @@ public class Strand {
 	private int length;
 	private int index = 0;
 	private boolean[] bonds;
-	private static int IMAGESIZE = Nucleotide.getImage();
+	private static int IMAGESIZE = Nucleotide.getImageSize();
 	public Strand(int length){
 		this(length,0,0,0);
 	}
@@ -44,20 +44,20 @@ public class Strand {
 		Strand strand = new Strand(length);
 		for(int i = 0; i < length; i++) {
 			if(dnaRna.equals("dna")) {
-				switch(rand.nextInt(4)) {   
+				switch(rand.nextInt(4)) {
 				case 0: strand.addNucleotideToEnd(new DnaNucleotide('A')); break;
 				case 1: strand.addNucleotideToEnd(new DnaNucleotide('T')); break;
 				case 2: strand.addNucleotideToEnd(new DnaNucleotide('G')); break;
 				case 3: strand.addNucleotideToEnd(new DnaNucleotide('C')); break;
-				}                           
-			}                               
-			else if (dnaRna.equals("rna")){ 
-				switch(rand.nextInt(4)) {   
+				}
+			}
+			else if (dnaRna.equals("rna")){
+				switch(rand.nextInt(4)) {
 				case 0: strand.addNucleotideToEnd(new RnaNucleotide('A')); break;
 				case 1: strand.addNucleotideToEnd(new RnaNucleotide('U')); break;
 				case 2: strand.addNucleotideToEnd(new RnaNucleotide('G')); break;
 				case 3: strand.addNucleotideToEnd(new RnaNucleotide('C')); break;
-				}                           
+				}
 			}
 			else {
 				throw new IllegalArgumentException("Input must be \"dna\" or \"rna\" ");
@@ -145,7 +145,7 @@ public class Strand {
 	 */
 	public void setPos(int x,int y){
 		this.x=x;
-		this.y=y;		
+		this.y=y;
 	}
 	/**
 	 * Sets the position of the strands left most corner with default rotation
@@ -195,14 +195,14 @@ public class Strand {
 			bases[i] = bases[i-1];
 		}
 		bases[0] = nucleotide;
-		
+
 	}
 	/**
 	 * Adds dna or rna Nucleotide to strand
 	 * @param Nucleotide
 	 */
 	public void addNucleotideToEnd(Nucleotide nucleotide) {
-		if(index < length) {	
+		if(index < length) {
 			bases[index]= nucleotide;
 			index++;
 		}
@@ -211,7 +211,7 @@ public class Strand {
 		}
 	}
 	/**
-	*Toggles whether the bond between the 3 prime end of this nucleotide 
+	*Toggles whether the bond between the 3 prime end of this nucleotide
 	*and the 5 prime end of the next one is broken or not
 	*@param Pos. Position of nucleotide that the bond is attatched to the suger
 	*/
@@ -295,7 +295,7 @@ public class Strand {
 			}
 			return true;
 		}
-		
+
 		return false;
 	}
 }

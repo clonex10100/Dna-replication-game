@@ -16,9 +16,10 @@ public class Helicase {
 	private double lzip;
 	private Circle helicase;
 	private Machine machine;
-	public static int SIZE = 70;
-	private static int LENGTH;
+	public static int SIZE = Nucleotide.getImageSize();
+	private int unzipLength;
 	private int index = 0;
+	private boolean unzipped = false;
 	private Circle createCircle(double x, double y, double r, Color color) {
 		Circle circle = new Circle(x, y, r, color);
 		circle.setCursor(Cursor.HAND);
@@ -30,20 +31,21 @@ public class Helicase {
 		circle.setOnMouseDragged((t) -> {
 			Circle c = (Circle) (t.getSource());
 			double offset = t.getSceneX() - cxs;
-			if(t.getSceneX()+offset>XS+Nucleotide.getImageSize()*LENGTH) {
-				c.setCenterX(XS+Nucleotide.getImageSize()*LENGTH);
-				while(index<LENGTH) {
+			if(t.getSceneX()+offset>XS+Nucleotide.getImageSize()*unzipLength) {
+				c.setCenterX(XS+Nucleotide.getImageSize()*unzipLength);
+				unzipped = true;
+				while(index<unzipLength) {
 					machine.unzip();
 					index++;
 				}
 			}
-			else if(offset > 0 && index < LENGTH) {
+			else if(offset > 0 && index < unzipLength) {
 				c.setCenterX(c.getCenterX() + offset);
-				if(c.getCenterX()-Nucleotide.getImageSize()-20 > lzip ) {	
+				if(c.getCenterX()-Nucleotide.getImageSize()-20 > lzip ) {
 						machine.unzip();
 						lzip = lzip+Nucleotide.getImageSize();
-						index++;			
-				}	
+						index++;
+				}
 			}
 			cxs = t.getSceneX();
 		});
@@ -53,11 +55,19 @@ public class Helicase {
 		lzip = x;
 		XS = x;
 		cxs = x;
-		LENGTH = length;
+		unzipLength = length;
 		this.machine = machine;
 		helicase = createCircle((double)(x),(double)(y),SIZE,new Color(1,0.27,0,1));
 		group.getChildren().add(helicase);
-		
-	}
 
+	}
+	public boolean isUnzipped() {
+		return unzipped;
+	}
+	public int getPos() {
+		return (int)(helicase.getCenterX());
+	}
+	public void setUnzipLength(int length){
+		unzipLength = length;
+	}
 }

@@ -34,14 +34,21 @@ public class HelicaseTesting extends Application{
 		Machine machine = new Machine(originalHelix,root);
 		stage.setScene(scene);
 		stage.show();
+
 	    new AnimationTimer()
 	    {
+					boolean done = false;
         	long lastNano = 0;
 	        public void handle(long currentNanoTime)
 	        {
 	    			if((currentNanoTime - lastNano) > 60000) {
 	    				gc.setFill(new Color(1,1,1, 1.0) );
 	    				gc.fillRect(0,0, 1010,512);
+	    				if(machine.isUnzipped()&&!done) {
+	    					System.out.println("unzipped");
+								machine.addZone(0,0,3);
+								done = true;
+	    				}
 	    				machine.draw(gc);
 	    				lastNano = currentNanoTime;
 	    			}
