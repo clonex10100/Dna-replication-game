@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import nucleotides.Helix;
 import nucleotides.Nucleotide;
+import javafx.scene.canvas.GraphicsContext;
 
 public class PrimeZone{
 	/*
@@ -28,7 +29,7 @@ public class PrimeZone{
 	  helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
 	}
 	public void addComplementaryNucleotide() {
-		helix[zone[1][0]].setNucleotide(zone[1][1], zone[1][2], helix[zone[1][0]].getNucleotide((zone[1][1]+1)%2, helix[zone[1][0]].getLength()-zone[1][2]-1).getRnaComplement());
+		helix[zone[1][0]].setNucleotide(zone[1][1], zone[1][2], helix[zone[1][0]].getNucleotide(zone[1][1] == 1 ? 2:1, helix[zone[1][0]].getLength()-zone[1][2]-1).getRnaComplement());
 	}
 	/**
 	 * Toggles the bond of the nucleotide and helix specified in init
@@ -45,11 +46,14 @@ public class PrimeZone{
 	public boolean inRange(double x, double y){
 		if((zone[0][0] - RANGE < x && x < zone[0][0] + RANGE) &&
     		(zone[0][1] - RANGE < y && y < zone[0][1] + RANGE)){
-			return true; 
+			return true;
 	    }
 	    else{
 	    	return false;
 	    }
+	}
+	public void draw(int type,GraphicsContext gc){
+		gc.strokeOval(zone[0][0]-RANGE/2,zone[0][1]-RANGE/2,RANGE,RANGE);
 	}
 	@Override
 	public boolean equals(Object obj) {

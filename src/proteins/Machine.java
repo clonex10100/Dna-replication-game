@@ -24,6 +24,7 @@ public class Machine {
 	private int y2;
 	private int index = 0;
 	private static int LENGTH;
+	private PrimeZoneManager man;
 	Helix helix;
 	Helix upperHelix;
 	Helix lowerHelix;
@@ -39,10 +40,9 @@ public class Machine {
 		upperHelix = new Helix(new Strand(LENGTH),false);
 		lowerHelix = new Helix(new Strand(LENGTH),false);
 		helicase = new Helicase(xs, ys,LENGTH,this,root);
-		PrimeZoneManager man = new PrimeZoneManager();
-		man.addZone(0,new PrimeZone(new int[] {500,300},new int[] {1,2,3},upperHelix,lowerHelix));	
+		man = new PrimeZoneManager();
+		man.addZone(0,new PrimeZone(new int[] {500,300},new int[] {0,1,3},upperHelix,lowerHelix));
 		new Primase(100,100,man,root);
-		PrimeZone z = new PrimeZone(new int[] {500,300}, new int[] {1,2,3},upperHelix,lowerHelix);
 	}
 	/**
 	 * Unzips the helix that Helicase is bound to by one nucleotide
@@ -70,6 +70,6 @@ public class Machine {
 		helix.draw(gc);
 		upperHelix.draw(gc);
 		lowerHelix.draw(gc);
-
+		man.draw(gc);
 	}
 }

@@ -2,6 +2,7 @@ package proteins;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.canvas.GraphicsContext;
 
 import nucleotides.DnaNucleotide;
 /**
@@ -57,5 +58,16 @@ public class PrimeZoneManager {
 			}
 		}
 		return false;
+	}
+	public void draw(GraphicsContext gc){
+		for(int i = 0; i < ZoneMap.get(0).size(); i++ ){
+			ZoneMap.get(0).get(i).draw(0,gc);
+		}
+		for(int i = 1; i < ZoneMap.get(1).size(); i++ ){
+			ZoneMap.get(1).get(i).draw(1,gc);
+		}
+		for(int i = 2; i < ZoneMap.get(2).size(); i++ ){
+			ZoneMap.get(2).get(i).draw(2,gc);
+		}
 	}
 }
