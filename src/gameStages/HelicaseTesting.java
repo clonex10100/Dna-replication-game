@@ -15,7 +15,6 @@ import nucleotides.Nucleotide;
 import nucleotides.Strand;
 import proteins.Helicase;
 import proteins.Machine;
-
 public class HelicaseTesting extends Application{
 	public static void main(String[] args){
 		launch(args);
