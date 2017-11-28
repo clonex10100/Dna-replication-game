@@ -29,7 +29,8 @@ public class PrimeZone{
 	  helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
 	}
 	public void addComplementaryNucleotide() {
-		helix[zone[1][0]].setNucleotide(zone[1][1], zone[1][2], helix[zone[1][0]].getNucleotide(zone[1][1] == 1 ? 2:1, helix[zone[1][0]].getLength()-zone[1][2]-1).getRnaComplement());
+		int length = helix[zone[1][0]].getLength();
+		helix[zone[1][0]].setNucleotide(zone[1][1], zone[1][2], helix[zone[1][0]].getNucleotide((zone[1][0]+1)%2, length-zone[1][2]-1).getRnaComplement());
 	}
 	/**
 	 * Toggles the bond of the nucleotide and helix specified in init

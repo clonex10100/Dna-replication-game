@@ -37,7 +37,7 @@ public class HelicaseTesting extends Application{
 
 	    new AnimationTimer()
 	    {
-					boolean done = false;
+			boolean done = false;
         	long lastNano = 0;
 	        public void handle(long currentNanoTime)
 	        {
@@ -46,7 +46,7 @@ public class HelicaseTesting extends Application{
 	    				gc.fillRect(0,0, 1010,512);
 	    				if(machine.isUnzipped()&&!done) {
 	    					System.out.println("unzipped");
-								machine.addZone(0,0,3);
+								machine.addZone(0,0,5);
 								done = true;
 	    				}
 	    				machine.draw(gc);

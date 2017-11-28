@@ -8,8 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
  *
  */
 public class Helix {
-	private Strand strand1;
-	private Strand strand2;
+	private Strand[] strands;
 	private static int imageSize = Nucleotide.getImageSize();
 	private int length;
 	private int x;
@@ -20,21 +19,20 @@ public class Helix {
 	private static double XSHIFT = 12;
 	private static double YSHIFT = imageSize*0.07;
 	private void updateStrandPos() {
-		strand1.setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT));
-		strand2.setPos(this.x+(int)(imageSize*length),this.y,180);
+		strands[0].setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT));
+		strands[1].setPos(this.x+(int)(imageSize*length),this.y,180);
 	}
 	public Helix(Strand strand,boolean generateComplementaryStrand) {
 		this(strand, generateComplementaryStrand ? strand.getComplementaryDnaStrand():new Strand(strand.getLength()));
-		
+
 	}
 	public Helix(Strand strand1,Strand strand2) {
 		if(strand1.getLength() != strand2.getLength()) {
 			throw new IllegalArgumentException("Strands must have the same length");
 		}
-		this.strand1 = strand1;
-		this.strand2 = strand2;
-		this.length = strand1.getLength();
-		int[] pos = strand1.getPos();
+		strands = new Strand[] {strand1,strand2};
+		this.length = strands[0].getLength();
+		int[] pos = strands[0].getPos();
 		x = pos[0];
 		y = pos[1];
 		r = pos[2];
@@ -61,15 +59,7 @@ public class Helix {
 	 * @param Pos on strand
 	 */
 	public Nucleotide getNucleotide(int strand, int pos) {
-		if(strand ==1) {
-			return strand1.getNucleotide(pos);
-		}
-		else if(strand ==2) {
-			return strand2.getNucleotide(pos);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		return strands[strand].getNucleotide(pos);
 	}
 	/**
 	 * Sets the position of helix from the top left
@@ -80,7 +70,7 @@ public class Helix {
 		this.x = x;
 		this.y= y+imageSize;
 		this.updateStrandPos();
-	
+
 	}
 	public void setPos(int x,int y,int r) {
 		this.x = x;
@@ -90,20 +80,12 @@ public class Helix {
 	}
 	/**
 	 * Sets nucleotide in specified strand at specified position
-	 * @param strand int 1 or 2 
+	 * @param strand int 1 or 2
 	 * @param pos pos < length
 	 * @param nucleotide nucleotide
 	 */
 	public void setNucleotide(int strand, int pos, Nucleotide nucleotide) {
-		if(strand ==1) {
-			strand1.setNucleotide(pos,nucleotide);
-		}
-		else if(strand ==2) {
-			strand2.setNucleotide(pos,nucleotide);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		strands[strand].setNucleotide(pos,nucleotide);
 		this.updateStrandPos();
 	}
 	/**
@@ -112,15 +94,7 @@ public class Helix {
 	 * @param pos int < length
 	 */
 	public void removeNucleotide(int strand, int pos) {
-		if(strand ==1) {
-			strand1.removeNucleotide(pos);
-		}
-		else if(strand ==2) {
-			strand2.removeNucleotide(pos);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		strands[strand].removeNucleotide(pos);
 	}
 	/**
 	 * Adds nucleotide to start of strand
@@ -128,15 +102,7 @@ public class Helix {
 	 * @param nucleotide
 	 */
 	public void addNucleotideToStart(int strand, Nucleotide nucleotide) {
-		if(strand ==1) {
-			strand1.addNucleotideToStart(nucleotide);
-		}
-		else if(strand ==2) {
-			strand2.addNucleotideToStart(nucleotide);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		strands[strand].addNucleotideToStart(nucleotide);
 	}
 	/**
 	 * Adds nucleotide to end of strand
@@ -144,15 +110,7 @@ public class Helix {
 	 * @param nucleotide
 	 */
 	public void addNucleotideToEnd(int strand, Nucleotide nucleotide) {
-		if(strand ==1) {
-			strand1.addNucleotideToEnd(nucleotide);
-		}
-		else if(strand ==2) {
-			strand2.addNucleotideToEnd(nucleotide);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		strands[strand].addNucleotideToEnd(nucleotide);
 	}
 	/**
 	 * Toggles the bond between two nucleotides on the specified strand
@@ -160,15 +118,7 @@ public class Helix {
 	 * @param pos- pos > 0 and pos < length
 	 */
 	public void toggleBond(int strand, int pos) {
-		if(strand ==1) {
-			strand1.toggleBond(pos);
-		}
-		else if(strand ==2) {
-			strand2.toggleBond(pos);
-		}
-		else {
-			throw new IllegalArgumentException("Expected 1 or 2");
-		}
+		strands[strand].toggleBond(pos);
 	}
 	/**
 	 * Draws both strands next to each other
@@ -181,8 +131,8 @@ public class Helix {
 	    	gc.translate(x, y-imageSize);
 	    	gc.rotate(r);
 	    	gc.translate(-x, -(y-imageSize));
-		strand1.draw(gc);
-		strand2.draw(gc);
+		strands[0].draw(gc);
+		strands[1].draw(gc);
 		gc.restore();
 	}
 }

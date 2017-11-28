@@ -49,10 +49,10 @@ public class Machine {
 	 */
 	public void unzip(){
 		//Swap the nucleotides
-		upperHelix.addNucleotideToStart(2,helix.getNucleotide(2,LENGTH-1-index));
-		helix.removeNucleotide(2,LENGTH-index-1);
-	  lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
-	  helix.removeNucleotide(1,index);
+		upperHelix.addNucleotideToStart(1,helix.getNucleotide(1,LENGTH-1-index));
+		helix.removeNucleotide(1,LENGTH-index-1);
+	  lowerHelix.addNucleotideToEnd(0,helix.getNucleotide(0,index));
+	  helix.removeNucleotide(0,index);
 	   	//Edit the positions accounting for swapped nucleotides
 		int h = Nucleotide.getImageSize()*(index+1);
 		x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
@@ -72,6 +72,7 @@ public class Machine {
 		double x = helicase.getPos()-Nucleotide.getImageSize()*pos*Math.cos(Math.toRadians(helix == 1 ? 30:-30));
 		double y = ys + Nucleotide.getImageSize()*pos*Math.sin(Math.toRadians(helix == 1 ? 30:-30));
 		System.out.println(x);
+		pos = (helix == 0 ? upperHelix:lowerHelix).getLength()-pos;
 		 man.addZone(0, new PrimeZone(new int[]{(int)(x),(int)(y)},new int[]{helix,strand,pos},upperHelix,lowerHelix));
 	}
 	public boolean isUnzipped() {
