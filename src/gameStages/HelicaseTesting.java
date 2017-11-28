@@ -17,13 +17,7 @@ import proteins.Helicase;
 import proteins.Machine;
 
 public class HelicaseTesting extends Application{
-	boolean drag = false;
-	boolean f = false;
-	int dsx;
-	int dsy;
-	int my;
 	public static void main(String[] args){
-
 		launch(args);
 	}
 	@Override
@@ -36,48 +30,11 @@ public class HelicaseTesting extends Application{
 		int length = 10;
 		int xs = 50;
 		int ys = 200;
-		Helix original = new Helix(Strand.getRandomStrand(length, "dna"),true);
-		original.setPos(xs, ys);
-		Machine circle = new Machine(original,root);
-
+		Helix originalHelix = new Helix(Strand.getRandomStrand(length, "dna"),true);
+		originalHelix.setPos(xs, ys);
+		Machine machine = new Machine(originalHelix,root);
 		stage.setScene(scene);
 		stage.show();
-//		root.setOnMousePressed(new EventHandler<MouseEvent>() {
-//			@Override
-//
-//			public void handle(MouseEvent mouseEvent) {
-//				  int[] pos = circle.getPos();
-//				  System.out.println("HUESTHUETS");
-//				  	if(pos[0] - Machine.SIZE <  mouseEvent.getSceneX() && mouseEvent.getSceneX() < pos[0] + Helicase.SIZE &&
-//				  			pos[1] - Helicase.SIZE < mouseEvent.getSceneY() && mouseEvent.getSceneY()< pos[1] + Helicase.SIZE
-//				  			&& !drag)
-//				  	{
-//				  			System.out.println("fuck");
-//				  			drag = true;
-//				  			dsx = pos[0];
-//				  			dsy = pos[1];
-//				  	}
-//			}
-//		});
-//		root.setOnMouseMoved(new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(MouseEvent mouseEvent) {
-//				System.out.println("ueo");
-//				  	if(drag) {
-//
-//				  		System.out.println("uea");
-//				  		my = (int)(mouseEvent.getScreenY());
-//				  	}
-//
-//			}
-//		});
-//		root.setOnMouseReleased(new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(MouseEvent mouseEvent) {
-//				  	drag = false;
-//
-//			}
-//		});
 	    new AnimationTimer()
 	    {
         	long lastNano = 0;
@@ -86,7 +43,7 @@ public class HelicaseTesting extends Application{
 	    			if((currentNanoTime - lastNano) > 60000) {
 	    				gc.setFill(new Color(1,1,1, 1.0) );
 	    				gc.fillRect(0,0, 1010,512);
-	    				circle.draw(gc);
+	    				machine.draw(gc);
 	    				lastNano = currentNanoTime;
 	    			}
 	        }
