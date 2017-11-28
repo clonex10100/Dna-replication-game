@@ -33,21 +33,27 @@ public class Machine {
 		LENGTH = helix.getLength();
 		xs = pos[0]-Nucleotide.getImageSize();
 		ys= pos[1]+Nucleotide.getImageSize();
-    		x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
-	   	y2 = ys - (int)(Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30)))-25; 
+    	x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
+	   	y2 = ys - (int)(Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30)))-25;
 		this.helix = helix;
 		upperHelix = new Helix(new Strand(LENGTH),false);
 		lowerHelix = new Helix(new Strand(LENGTH),false);
 		helicase = new Helicase(xs, ys,LENGTH,this,root);
+		PrimeZoneManager man = new PrimeZoneManager();
+		man.addZone(0,new PrimeZone(new int[] {500,300},new int[] {1,2,3},upperHelix,lowerHelix));	
+		new Primase(100,100,man,root);
+		PrimeZone z = new PrimeZone(new int[] {500,300}, new int[] {1,2,3},upperHelix,lowerHelix);
 	}
 	/**
 	 * Unzips the helix that Helicase is bound to by one nucleotide
 	 */
 	public void unzip(){
+		//Swap the nucleotides
 		upperHelix.addNucleotideToStart(2,helix.getNucleotide(2,LENGTH-1-index));
 		helix.removeNucleotide(2,LENGTH-index-1);
-	    	lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
-	   	 helix.removeNucleotide(1,index);
+	    lowerHelix.addNucleotideToEnd(1,helix.getNucleotide(1,index));
+	   	helix.removeNucleotide(1,index);
+	   	//Edit the positions accounting for swapped nucleotides
 		int h = Nucleotide.getImageSize()*(index+1);
 		x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
 		y1=(int)ys+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
@@ -56,14 +62,14 @@ public class Machine {
 		lowerHelix.setPos(x1, y1,-30);
 		index++;
 	}
+	/**
+	 * Draws all the helixes the machine controls.
+	 * @param gc
+	 */
 	public void draw(GraphicsContext gc) {
-		//gc.setStroke(new Color(0,0,0,1.0));
-		//gc.setFill(new Color (1,0.269,0,1.0));
 		helix.draw(gc);
 		upperHelix.draw(gc);
 		lowerHelix.draw(gc);
-		//gc.strokeOval(xc,yc, SIZE,SIZE);
-		//gc.fillOval(xc,yc,SIZE,SIZE);
 
 	}
 }

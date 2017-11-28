@@ -40,6 +40,7 @@ public class HelicaseTesting extends Application{
 		Helix original = new Helix(Strand.getRandomStrand(length, "dna"),true);
 		original.setPos(xs, ys);
 		Machine circle = new Machine(original,root);
+		
 		stage.setScene(scene);
 		stage.show();
 //		root.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -87,6 +88,7 @@ public class HelicaseTesting extends Application{
 	    			gc.setFill(new Color(1,1,1, 1.0) );
 	    			gc.fillRect(0,0, 1010,512);
 	    			circle.draw(gc);
+	    			gc.strokeLine(500, 300, 600, 300);
 	    			lastNano = currentNanoTime;
 	    		}
 	        }
