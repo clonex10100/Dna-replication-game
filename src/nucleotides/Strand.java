@@ -7,13 +7,13 @@ import java.util.Random;
  */
 public class Strand {
 	private Nucleotide[] bases;
-	private int length;
-	private int index = 0;
-	private boolean[] bonds;
-	private int imageSize = Nucleotide.getImageSize();
 	private int x;
 	private int y;
 	private int r;
+	private int length;
+	private int index = 0;
+	private boolean[] bonds;
+	private static int IMAGESIZE = Nucleotide.getImage();
 	public Strand(int length){
 		this(length,0,0,0);
 	}
@@ -24,14 +24,13 @@ public class Strand {
 		this.x = x;
 		this.y = y;
 		this.r = r;
+		this.length = length;
 		bases = new Nucleotide[length];
 		bonds = new boolean[length];
-		this.length = length;
 		for(int i = 0; i < length; i++){
 			bonds[i] = true;
 			bases[i] = null;
 		}
-		
 	}
 	/**
 	 * Generates a random strand of rna or dna
@@ -258,11 +257,11 @@ public class Strand {
 				bases[i].draw(gc,x2,y);
 				if(i+1< length){
 					if(bases[i+1] != null && bonds[i]){
-						gc.strokeLine(x2+imageSize*.81, y+imageSize*.81, x2+imageSize*1.10, y+imageSize*.73);
+						gc.strokeLine(x2+IMAGESIZE*.81, y+IMAGESIZE*.81, x2+IMAGESIZE*1.10, y+IMAGESIZE*.73);
 					}
 				}
 			}
-			x2+=imageSize;
+			x2+=IMAGESIZE;
 		}
 		if(r!=0) {
 			gc.restore();
