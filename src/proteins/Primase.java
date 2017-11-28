@@ -12,7 +12,7 @@ import nucleotides.Nucleotide;
 public class Primase {
 	private ImageView iv;
 	private static int SIZE = 100;
-	private static Image IMAGE = new Image("a.png",SIZE,SIZE,false,false);
+	private static Image IMAGE = new Image("primase.png",SIZE,SIZE,false,false);
 	private PrimeZoneManager zones;
 	private ImageView createIv(double x, double y) {
 		ImageView iv = new ImageView();
