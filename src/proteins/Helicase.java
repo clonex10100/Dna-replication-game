@@ -69,5 +69,6 @@ public class Helicase {
 	}
 	public void setUnzipLength(int length){
 		unzipLength = length;
+		unzipped = false;
 	}
 }

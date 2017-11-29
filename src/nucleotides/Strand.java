@@ -198,7 +198,12 @@ public class Strand {
 			bases[i] = bases[i-1];
 		}
 		bases[0] = nucleotide;
-
+	}
+	public void shift(){
+		for(int i = 1; i < length-1;i++){
+			bases[i]=bases[i+1];
+		}
+		bases[0] =null;
 	}
 	/**
 	 * Adds dna or rna Nucleotide to strand

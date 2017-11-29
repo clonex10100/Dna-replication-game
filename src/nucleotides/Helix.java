@@ -24,7 +24,6 @@ public class Helix {
 	}
 	public Helix(Strand strand,boolean generateComplementaryStrand) {
 		this(strand, generateComplementaryStrand ? strand.getComplementaryDnaStrand():new Strand(strand.getLength()));
-
 	}
 	public Helix(Strand strand1,Strand strand2) {
 		if(strand1.getLength() != strand2.getLength()) {
@@ -91,6 +90,9 @@ public class Helix {
 		strands[strand].setNucleotide(pos,nucleotide);
 		this.updateStrandPos();
 	}
+	public void shift(int strand){
+		strands[strand].shift();
+	}
 	/**
 	 * Removes nucleotide in specified strand at specified postion
 	 * @param strand- int 1 or 2
@@ -106,6 +108,7 @@ public class Helix {
 	 */
 	public void addNucleotideToStart(int strand, Nucleotide nucleotide) {
 		strands[strand].addNucleotideToStart(nucleotide);
+		//strands[(strand+1)%2].addNucleotideToEnd(null);
 	}
 	/**
 	 * Adds nucleotide to end of strand

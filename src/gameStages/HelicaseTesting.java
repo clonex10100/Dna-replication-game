@@ -72,18 +72,21 @@ public class HelicaseTesting extends Application{
 	        				}
 	        			}
 	        			if(empty) {
-		        			machine.addZone(6,0,0,upperIndex);
-		        			machine.addZone(6,1,1,lowerIndex);
-		        			upperIndex--;
-		        			lowerIndex++;
-		        			if(upperIndex == 1) {
-		        				stage++;
-		        			}
+									if(upperIndex==1){
+										stage++;
+									}
+									else{
+		        				machine.addZone(6,0,0,upperIndex);
+		        				machine.addZone(6,1,1,lowerIndex);
+		        				upperIndex--;
+		        				lowerIndex++;
+									}
 	        			}
 	        		}
 	        		if(stage==4) {
 	        			machine.setUnzipRange(10);
-	        			stage = 1;
+								upperIndex = unzipRange+1;
+	        			stage = 0;
 	        		}
 	        		machine.draw(gc);
 	        		lastNano = currentNanoTime;

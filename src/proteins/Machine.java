@@ -57,6 +57,7 @@ public class Machine {
 	public void unzip(){
 		//Swap the nucleotides
 		upperHelix.addNucleotideToStart(1,helix.getNucleotide(1,LENGTH-1-index));
+		upperHelix.shift(0);
 		helix.removeNucleotide(1,LENGTH-index-1);
 		lowerHelix.addNucleotideToEnd(0,helix.getNucleotide(0,index));
 		helix.removeNucleotide(0,index);
@@ -77,7 +78,7 @@ public class Machine {
 		double x = helicase.getPos()-Nucleotide.getImageSize()*(pos-1)*Math.cos(Math.toRadians(helix == 0 ? -30:30))-25;
 		double y = ys + Nucleotide.getImageSize()*(pos-1)*Math.sin(Math.toRadians(helix == 0 ? -30:30));
 		PrimeZone zone = new PrimeZone(new int[]{(int)(x),(int)(y)},new int[]{helix,strand,pos},upperHelix,lowerHelix);
-		
+
 	 	if(type == 0){
 			new Primase(cx,cy, man, root);
 			cy+=100;
