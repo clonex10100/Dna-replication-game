@@ -45,8 +45,8 @@ public class HelicaseTesting extends Application{
 	    				gc.setFill(new Color(1,1,1, 1.0) );
 	    				gc.fillRect(0,0, 1010,512);
 	    				if(machine.isUnzipped()&&!done) {
-	    					System.out.println("unzipped");
-								machine.addZone(0,0,5);
+								machine.addZone(0,0,0,2);
+								machine.addZone(0,1,1,6);
 								done = true;
 	    				}
 	    				machine.draw(gc);

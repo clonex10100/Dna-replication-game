@@ -15,13 +15,16 @@ public class PrimeZoneManager {
 	public PrimeZoneManager() {
 		/*
 		 * 0: Primase
-		 * 1: Draggable Nucleotide
-		 * 2: Ligase
+		 * 1-3: Draggable Nucleotide
+		 * 4: Ligase
 		 */
 		ZoneMap = new HashMap<Integer,ArrayList<PrimeZone>>();
 		ZoneMap.put(0,new ArrayList<PrimeZone>());
 		ZoneMap.put(1,new ArrayList<PrimeZone>());
 		ZoneMap.put(2,new ArrayList<PrimeZone>());
+		ZoneMap.put(3,new ArrayList<PrimeZone>());
+		ZoneMap.put(4,new ArrayList<PrimeZone>());
+		ZoneMap.put(5,new ArrayList<PrimeZone>());
 	}
 	/**
 	 * Adds a zone with tag p to zone manager

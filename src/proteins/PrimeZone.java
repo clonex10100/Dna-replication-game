@@ -22,6 +22,21 @@ public class PrimeZone{
 	  return zone[0];
 	}
 	/**
+	 * Checked if given coords are within the primezone
+	 * @param x- int
+	 * @param y-int
+	 * @return True or false
+	 */
+	public boolean inRange(double x, double y){
+		if((zone[0][0] - RANGE < x && x < zone[0][0] + RANGE) &&
+			(zone[0][1] - RANGE < y && y < zone[0][1] + RANGE)){
+			return true;
+	    }
+	    else{
+	    	return false;
+	    }
+	}
+	/**
 	 * Adds a nucleotide to the helix and position specified by the primezone
 	 * @param nucleotide
 	 */
@@ -30,28 +45,26 @@ public class PrimeZone{
 	}
 	public void addComplementaryNucleotide() {
 		int length = helix[zone[1][0]].getLength();
-		helix[zone[1][0]].setNucleotide(zone[1][1], zone[1][2], helix[zone[1][0]].getNucleotide((zone[1][0]+1)%2, length-zone[1][2]-1).getRnaComplement());
+		Helix h = helix[zone[1][0]];
+		int pos;
+		int pos2;
+		if(zone[1][0] == 0) {
+			pos = zone[1][2]-1;
+			pos2 =length -zone[1][2];
+		}
+		else {
+			pos = helix[zone[1][0]].getIndex()-zone[1][2];
+			pos2 = length-h.getIndex()+zone[1][2]-1;
+		}
+		System.out.println(pos);
+		Nucleotide newNucleotide = h.getNucleotide((zone[1][1]+1)%2,pos).getRnaComplement();
+		h.setNucleotide(zone[1][1], pos2, newNucleotide);
 	}
 	/**
 	 * Toggles the bond of the nucleotide and helix specified in init
 	 */
 	public void toggleBond(){
 		helix[zone[1][0]].toggleBond(zone[1][1],zone[1][2]);
-	}
-	/**
-	 * Checked if given coords are within the primezone
-	 * @param x- int
-	 * @param y-int
-	 * @return True or false
-	 */
-	public boolean inRange(double x, double y){
-		if((zone[0][0] - RANGE < x && x < zone[0][0] + RANGE) &&
-    		(zone[0][1] - RANGE < y && y < zone[0][1] + RANGE)){
-			return true;
-	    }
-	    else{
-	    	return false;
-	    }
 	}
 	public void draw(int type,GraphicsContext gc){
 		gc.strokeOval(zone[0][0]-RANGE/2,zone[0][1]-RANGE/2,RANGE,RANGE);

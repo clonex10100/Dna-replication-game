@@ -111,6 +111,9 @@ public class Strand {
 	public int[] getPos() {
 		return new int[] {x,y,r};
 	}
+	public int getIndex() {
+		return index;
+	}
 	/**
 	 * Wrapper for rotation of nucleotide
 	 * @return int rotation

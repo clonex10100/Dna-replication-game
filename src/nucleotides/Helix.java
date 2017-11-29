@@ -46,6 +46,9 @@ public class Helix {
 	public int[] getPos() {
 		return new int[] {x,y-imageSize,r};
 	}
+	public int getIndex() {
+		return strands[0].getIndex();
+	}
 	/**
 	 * Gets the length of helix
 	 * @return int length
