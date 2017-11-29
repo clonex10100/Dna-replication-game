@@ -18,6 +18,8 @@ public class DragableNucleotide{
     iv.setSmooth(true);
     iv.setPickOnBounds(true);
     iv.setCache(true);
+    iv.setX(x);
+		iv.setY(y);
     iv.setCursor(Cursor.HAND);
     iv.setOnMouseDragged((t) -> {
       ImageView i = (ImageView) (t.getSource());

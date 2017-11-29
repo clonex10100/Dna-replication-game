@@ -22,13 +22,13 @@ public class HelicaseTesting extends Application{
 	public void start(Stage stage) {
 		Group root = new Group();
 		Scene scene = new Scene(root);
-		final Canvas canvas = new Canvas(1000, 500);
+		final Canvas canvas = new Canvas(1200, 700);
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		int length = 10;
+		int length = 15;
 		int unzipRange = 5;
-		int xs = 50;
-		int ys = 200;
+		int xs = 150;
+		int ys = 300;
 		Helix originalHelix = new Helix(Strand.getRandomStrand(length, "dna"),true);
 		originalHelix.setPos(xs, ys);
 		Machine machine = new Machine(originalHelix,unzipRange,root);
@@ -42,15 +42,15 @@ public class HelicaseTesting extends Application{
 	        public void handle(long currentNanoTime){
 	        	if(currentNanoTime - lastNano > 900000) {
     				gc.setFill(new Color(1,1,1, 1.0) );
-    				gc.fillRect(0,0, 1010,512);
+    				gc.fillRect(0,0, 1200,700);
 	        		if(stage == 0 || stage == 5) {
 	        			if(machine.isUnzipped()) {
 	        				stage+=1;
 	        			}
 	        		}
 	        		if(stage == 1) {
-	        			machine.addZone(0,0,0,upperIndex);
-	        			machine.addZone(0,1,1,lowerIndex);
+	        			machine.addZone(0,0,0,upperIndex,50, 300);
+	        			machine.addZone(0,1,1,lowerIndex,50,400);
 	        			upperIndex--;
 	        			lowerIndex++;
 	        			stage++;
@@ -76,8 +76,8 @@ public class HelicaseTesting extends Application{
 										stage++;
 									}
 									else{
-		        				machine.addComplementaryNucleotideZone(0,0,upperIndex);
-		        				machine.addComplementaryNucleotideZone(1,1,lowerIndex);
+		        				machine.addComplementaryNucleotideZone(0,0,upperIndex,50,300);
+		        				machine.addComplementaryNucleotideZone(1,1,lowerIndex,50,400);
 		        				upperIndex--;
 		        				lowerIndex++;
 									}
@@ -90,8 +90,8 @@ public class HelicaseTesting extends Application{
 	        			stage = 5;
 	        		}
 							if(stage ==6){
-								machine.addZone(0,1,1,lowerIndex);
-								machine.addComplementaryNucleotideZone(0,0,upperIndex);
+								machine.addZone(0,1,1,lowerIndex,50,300);
+								machine.addComplementaryNucleotideZone(0,0,upperIndex,50,400);
 								upperIndex--;
 								lowerIndex++;
 								stage=2;

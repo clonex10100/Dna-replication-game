@@ -21,6 +21,8 @@ public class Primase {
 		iv.setPickOnBounds(true);
 		iv.setCache(true);
 		iv.setCursor(Cursor.HAND);
+		iv.setX(x);
+		iv.setY(y);
 		iv.setOnMouseDragged((t) -> {
 			ImageView i = (ImageView) (t.getSource());
 			i.setX(t.getSceneX()-SIZE/2);

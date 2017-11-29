@@ -19,9 +19,6 @@ public class Machine {
 	//Xy of upper upsidedown helx
 	private int x2;
 	private int y2;
-	//Xy of draggable protien creation
-	private int cx;
-	private int cy;
 	private static int LENGTH;
 	private int unzipIndex = 0;
 	private int unzipRange;
@@ -47,8 +44,6 @@ public class Machine {
 		int[] pos = helix.getPos();
 		xs = pos[0]-Nucleotide.getImageSize();
 		ys= pos[1]+Nucleotide.getImageSize();
-		cx = 50;
-		cy = 200;
 		x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
 		y2 = (int)(ys-Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30))-25);
 		originalHelix = helix;
@@ -82,21 +77,21 @@ public class Machine {
 	*Strand is one or two
 	*Pos is how many nucleotides away from Helicase
 	*/
-	public void addZone(int type,int helix,int strand, int pos){
+	public void addZone(int type,int helix,int strand, int pos, int spawnPosX, int spawnPosY){
 		PrimeZone zone = generateZone(helix,strand,pos,false);
 		switch(type){
-			case 0: new Primase(cx,cy,manager,root);cy+=100;break;
-			case 1: new DragableNucleotide(cx,cy,1,manager,root);cy+=100;break;
-			case 2: new DragableNucleotide(cx,cy,2,manager,root);cy+=100;break;
-			case 3: new DragableNucleotide(cx,cy,3,manager,root);cy+=100;break;
-			case 4: new DragableNucleotide(cx,cy,4,manager,root);cy+=100;break;
+			case 0: new Primase(spawnPosX,spawnPosY,manager,root);;break;
+			case 1: new DragableNucleotide(spawnPosX,spawnPosY,1,manager,root);break;
+			case 2: new DragableNucleotide(spawnPosX,spawnPosY,2,manager,root);break;
+			case 3: new DragableNucleotide(spawnPosX,spawnPosY,3,manager,root);break;
+			case 4: new DragableNucleotide(spawnPosX,spawnPosY,4,manager,root);break;
 		}
 		manager.addZone(type,zone);
 	}
 	/**
 	*Creates a draggable nucleotide
 	*/
-	public void addComplementaryNucleotideZone(int helix,int strand, int pos){
+	public void addComplementaryNucleotideZone(int helix,int strand, int pos, int spawnPosX, int spawnPosY){
 		PrimeZone zone = generateZone(helix,strand,pos,true);
 		int type = 0;
 		char b = zone.getComplmentaryDnaNucleotide().getBase();
@@ -106,7 +101,7 @@ public class Machine {
 			case 'G': type = 3;break;
 			case 'C': type = 4;break;
 		}
-		new DragableNucleotide(cx,cy,type,manager,root);
+		new DragableNucleotide(spawnPosX,spawnPosY,type,manager,root);
 		manager.addZone(type,zone);
 	}
 	public PrimeZone[] getPrimeZone(int type){
