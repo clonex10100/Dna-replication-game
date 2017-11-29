@@ -27,17 +27,18 @@ public class Machine {
 	private int cy;
 	private int index = 0;
 	private static int LENGTH;
-	private int unzipLength = 6;
+	private int unzipRange;
 	private PrimeZoneManager man;
 	private Helix helix;
 	private Helix upperHelix;
 	private Helix lowerHelix;
 	private Helicase helicase;
 	private Group root;
-	public Machine(Helix helix, Group root){
+	public Machine(Helix helix,int unzipRange,Group root){
 		int[] pos = helix.getPos();
 		this.root = root;
 		LENGTH = helix.getLength();
+		this.unzipRange = unzipRange;
 		xs = pos[0]-Nucleotide.getImageSize();
 		ys= pos[1]+Nucleotide.getImageSize();
 		cx = 50;
@@ -47,7 +48,7 @@ public class Machine {
 		this.helix = helix;
 		upperHelix = new Helix(new Strand(LENGTH),false);
 		lowerHelix = new Helix(new Strand(LENGTH),false);
-		helicase = new Helicase(xs, ys,unzipLength,this,root);
+		helicase = new Helicase(xs, ys,unzipRange,this,root);
 		man = new PrimeZoneManager();
 	}
 	/**
@@ -59,7 +60,7 @@ public class Machine {
 		helix.removeNucleotide(1,LENGTH-index-1);
 		lowerHelix.addNucleotideToEnd(0,helix.getNucleotide(0,index));
 		helix.removeNucleotide(0,index);
-	   	//Edit the positions accounting for swapped nucleotides
+	  //Edit the positions accounting for swapped nucleotides
 		int h = Nucleotide.getImageSize()*(index+1);
 		x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
 		y1=(int)ys+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
@@ -75,13 +76,35 @@ public class Machine {
 	public void addZone(int type,int helix,int strand, int pos){
 		double x = helicase.getPos()-Nucleotide.getImageSize()*(pos-1)*Math.cos(Math.toRadians(helix == 0 ? -30:30))-25;
 		double y = ys + Nucleotide.getImageSize()*(pos-1)*Math.sin(Math.toRadians(helix == 0 ? -30:30));
-		man.addZone(type, new PrimeZone(new int[]{(int)(x),(int)(y)},new int[]{helix,strand,pos},upperHelix,lowerHelix));
-		switch(type) {
-		case 0: new Primase(cx,cy, man, root); cy+=100; break;
+		PrimeZone zone = new PrimeZone(new int[]{(int)(x),(int)(y)},new int[]{helix,strand,pos},upperHelix,lowerHelix);
+		
+	 	if(type == 0){
+			new Primase(cx,cy, man, root);
+			cy+=100;
 		}
+		else if(type==6){
+			char n= zone.getComplmentaryDnaNucleotide().getBase();
+			System.out.println(n);
+			switch(n) {
+			case 'A': type = 1;break;
+			case 'T': type = 2;break;
+			case 'G': type = 3;break;
+			case 'C': type = 4;break;
+			}
+			new DragableNucleotide(cx,cy,type,man,root);
+			cy+=100;
+		}
+	 	man.addZone(type,zone);
+	}
+	public PrimeZone[] getPrimeZone(int type){
+		return man.getZones(type);
 	}
 	public boolean isUnzipped() {
 		return helicase.isUnzipped();
+	}
+	public void setUnzipRange(int newUnzip) {
+		unzipRange = newUnzip;
+		helicase.setUnzipLength(newUnzip);
 	}
 	/**
 	 * Draws all the helixes the machine controls.

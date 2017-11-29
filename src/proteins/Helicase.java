@@ -32,7 +32,7 @@ public class Helicase {
 			Circle c = (Circle) (t.getSource());
 			double offset = t.getSceneX() - cxs;
 			if(t.getSceneX()+offset>XS+Nucleotide.getImageSize()*unzipLength) {
-				c.setCenterX(XS+Nucleotide.getImageSize()*unzipLength);
+				c.setCenterX(XS+Nucleotide.getImageSize()*unzipLength+50);
 				unzipped = true;
 				while(index<unzipLength) {
 					machine.unzip();

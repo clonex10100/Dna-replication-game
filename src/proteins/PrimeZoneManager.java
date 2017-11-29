@@ -55,7 +55,7 @@ public class PrimeZoneManager {
 	public boolean isInZone(double x, double y, int p) {
 		for(int i = 0; i < ZoneMap.get(p).size();i++) {
 			if(ZoneMap.get(p).get(i).inRange(x, y)) {
-				ZoneMap.get(p).get(i).addComplementaryNucleotide();
+				ZoneMap.get(p).get(i).addComplementaryRnaNucleotide();
 				ZoneMap.get(p).remove(i);
 				return true;
 			}
@@ -66,11 +66,18 @@ public class PrimeZoneManager {
 		for(int i = 0; i < ZoneMap.get(0).size(); i++ ){
 			ZoneMap.get(0).get(i).draw(0,gc);
 		}
-		for(int i = 1; i < ZoneMap.get(1).size(); i++ ){
+		for(int i = 0; i < ZoneMap.get(1).size(); i++ ){
 			ZoneMap.get(1).get(i).draw(1,gc);
 		}
-		for(int i = 2; i < ZoneMap.get(2).size(); i++ ){
+		for(int i = 0; i < ZoneMap.get(2).size(); i++ ){
 			ZoneMap.get(2).get(i).draw(2,gc);
 		}
+		for(int i = 0; i < ZoneMap.get(3).size(); i++ ){
+			ZoneMap.get(3).get(i).draw(3,gc);
+		}
+		for(int i = 0; i < ZoneMap.get(4).size(); i++ ){
+			ZoneMap.get(4).get(i).draw(4,gc);
+		}
+		
 	}
 }
