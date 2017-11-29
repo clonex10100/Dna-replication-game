@@ -36,6 +36,7 @@ public class Helicase {
 				unzipped = true;
 				while(index<unzipLength) {
 					machine.unzip();
+					lzip+=Nucleotide.getImageSize();
 					index++;
 				}
 			}
@@ -43,7 +44,7 @@ public class Helicase {
 				c.setCenterX(c.getCenterX() + offset);
 				if(c.getCenterX()-Nucleotide.getImageSize()-20 > lzip ) {
 						machine.unzip();
-						lzip = lzip+Nucleotide.getImageSize();
+						lzip +=Nucleotide.getImageSize();
 						index++;
 				}
 			}

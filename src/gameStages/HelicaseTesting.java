@@ -43,7 +43,7 @@ public class HelicaseTesting extends Application{
 	        	if(currentNanoTime - lastNano > 900000) {
     				gc.setFill(new Color(1,1,1, 1.0) );
     				gc.fillRect(0,0, 1010,512);
-	        		if(stage == 0) {
+	        		if(stage == 0 || stage == 5) {
 	        			if(machine.isUnzipped()) {
 	        				stage+=1;
 	        			}
@@ -76,8 +76,8 @@ public class HelicaseTesting extends Application{
 										stage++;
 									}
 									else{
-		        				machine.addZone(6,0,0,upperIndex);
-		        				machine.addZone(6,1,1,lowerIndex);
+		        				machine.addComplementaryNucleotideZone(0,0,upperIndex);
+		        				machine.addComplementaryNucleotideZone(1,1,lowerIndex);
 		        				upperIndex--;
 		        				lowerIndex++;
 									}
@@ -86,8 +86,16 @@ public class HelicaseTesting extends Application{
 	        		if(stage==4) {
 	        			machine.setUnzipRange(10);
 								upperIndex = unzipRange+1;
-	        			stage = 0;
+								lowerIndex = 2;
+	        			stage = 5;
 	        		}
+							if(stage ==6){
+								machine.addZone(0,1,1,lowerIndex);
+								machine.addComplementaryNucleotideZone(0,0,upperIndex);
+								upperIndex--;
+								lowerIndex++;
+								stage=2;
+							}
 	        		machine.draw(gc);
 	        		lastNano = currentNanoTime;
 	        	}

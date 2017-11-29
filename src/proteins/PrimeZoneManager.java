@@ -1,9 +1,7 @@
 package proteins;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
-
 import nucleotides.DnaNucleotide;
 /**
  * Manages zone instances for each protein type.
@@ -15,8 +13,8 @@ public class PrimeZoneManager {
 	public PrimeZoneManager() {
 		/*
 		 * 0: Primase
-		 * 1-3: Draggable Nucleotide
-		 * 4: Ligase
+		 * 1-4: Draggable Nucleotide
+		 * 5: Ligase
 		 */
 		ZoneMap = new HashMap<Integer,ArrayList<PrimeZone>>();
 		ZoneMap.put(0,new ArrayList<PrimeZone>());
@@ -78,6 +76,6 @@ public class PrimeZoneManager {
 		for(int i = 0; i < ZoneMap.get(4).size(); i++ ){
 			ZoneMap.get(4).get(i).draw(4,gc);
 		}
-		
+
 	}
 }
