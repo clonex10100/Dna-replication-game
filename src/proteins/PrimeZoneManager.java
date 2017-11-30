@@ -37,7 +37,14 @@ public class PrimeZoneManager {
 	public boolean isInZone(double x, double y, int type) {
 		for(int i = 0; i < ZoneMap.get(type).size();i++) {
 			if(ZoneMap.get(type).get(i).inRange(x, y)) {
-				ZoneMap.get(type).get(i).addComplementaryRnaNucleotide();
+				switch(type){
+					case 0: ZoneMap.get(type).get(i).addComplementaryRnaNucleotide(); ZoneMap.get(type).get(i).toggleBond();break;
+					case 1: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+					case 2: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+					case 3: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+					case 4: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+					case 5: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+				}
 				ZoneMap.get(type).remove(i);
 				return true;
 			}
@@ -84,6 +91,9 @@ public class PrimeZoneManager {
 		}
 		for(int i = 0; i < ZoneMap.get(4).size(); i++ ){
 			ZoneMap.get(4).get(i).draw(4,gc);
+		}
+		for(int i = 0; i < ZoneMap.get(5).size(); i++ ){
+			ZoneMap.get(5).get(i).draw(5,gc);
 		}
 	}
 }

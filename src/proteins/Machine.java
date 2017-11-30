@@ -103,11 +103,12 @@ public class Machine {
 	public void addZone(int type,int helix,int strand, int pos, int spawnPosX, int spawnPosY){
 		PrimeZone zone = generateZone(helix,strand,pos,false);
 		switch(type){
-			case 0: new Primase(spawnPosX,spawnPosY,manager,root);;break;
+			case 0: new Primase(spawnPosX,spawnPosY,manager,root);break;
 			case 1: new DragableNucleotide(spawnPosX,spawnPosY,1,manager,root);break;
 			case 2: new DragableNucleotide(spawnPosX,spawnPosY,2,manager,root);break;
 			case 3: new DragableNucleotide(spawnPosX,spawnPosY,3,manager,root);break;
 			case 4: new DragableNucleotide(spawnPosX,spawnPosY,4,manager,root);break;
+			case 5: new DnaPolymerace(spawnPosX,spawnPosY,manager,root);break;
 		}
 		manager.addZone(type,zone);
 	}

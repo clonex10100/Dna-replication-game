@@ -95,14 +95,27 @@ public class PrimeZone{
 		}
 		h.setNucleotide(zone[1][1], pos, getComplmentaryRnaNucleotide());
 	}
+	public void addComplementaryDnaNucleotide() {
+		int length = helix[zone[1][0]].getLength();
+		Helix h = helix[zone[1][0]];
+		int pos;
+		if(zone[1][0] == 0) {
+			pos =length -zone[1][2];
+		}
+		else {
+			pos = length-h.getIndex()+zone[1][2]-1;
+		}
+		h.setNucleotide(zone[1][1], pos, getComplmentaryDnaNucleotide());
+	}
 	/**
 	 * Toggles the bond of the nucleotide and helix specified in init
 	 */
 	public void toggleBond(){
-		if(zone[1][2]-1>0){
-			System.out.println(zone[1][1]);
-			System.out.println(zone[1][2]);
-			helix[zone[1][0]].toggleBond(zone[1][1],zone[1][2]-1);
+		System.out.println(zone[1][0]);
+		System.out.println(zone[1][1]);
+		System.out.println(zone[1][2]);
+		if(1>0){
+			helix[zone[1][0]].toggleBond(zone[1][1],zone[1][2]);
 		}
 	}
 	public void draw(int type,GraphicsContext gc){

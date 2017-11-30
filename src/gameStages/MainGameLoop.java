@@ -49,6 +49,7 @@ public class MainGameLoop extends Application{
 	     		}
 	     	}
 	     	else if(stage == 1) {
+					//Add two polimerace zones.
 	     		machine.addZone(0,0,0,upperIndex,50, 300);
 	     		machine.addZone(0,1,1,lowerIndex,50,400);
 	     		upperIndex--;

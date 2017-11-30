@@ -1,6 +1,4 @@
 package proteins;
-
-
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -8,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import nucleotides.Nucleotide;
-
 public class Primase {
 	private ImageView iv;
 	private static int SIZE = 100;
