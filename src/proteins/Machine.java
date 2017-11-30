@@ -86,7 +86,7 @@ public class Machine {
 			upperHelix.shift(0);
 			lowerHelix.addNucleotideToEnd(0,originalHelix.getNucleotide(0,unzipIndex));
 			originalHelix.removeNucleotide(0,unzipIndex);
-	  	//Edit the positions accounting for added nucleotides
+	  		//Edit the positions accounting for added nucleotides
 			int h = Nucleotide.getImageSize()*(unzipIndex+1);
 			lowerX=(int)XS+h-(int)(h*Math.cos(Math.toRadians(-30)));
 			lowerY=(int)YS+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
