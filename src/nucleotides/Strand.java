@@ -10,7 +10,6 @@ public class Strand {
 	private int x;
 	private int y;
 	private int r;
-	private int length;
 	private int index = 0;
 	private boolean[] bonds;
 	private static int IMAGESIZE = Nucleotide.getImageSize();
@@ -24,10 +23,9 @@ public class Strand {
 		this.x = x;
 		this.y = y;
 		this.r = r;
-		this.length = length;
 		bases = new Nucleotide[length];
 		bonds = new boolean[length];
-		for(int i = 0; i < length; i++){
+		for(int i = 0; i < bases.length; i++){
 			bonds[i] = true;
 			bases[i] = null;
 		}
@@ -70,8 +68,8 @@ public class Strand {
 	 * @return New strand
 	 */
 	public Strand getComplementaryDnaStrand() {
-		Strand strand = new Strand(length);
-		for(int i = length-1; i >= 0; i--) {
+		Strand strand = new Strand(bases.length);
+		for(int i = bases.length-1; i >= 0; i--) {
 			if(bases[i]!= null) {
 				strand.addNucleotideToEnd(bases[i].getDnaComplement());
 			}
@@ -86,8 +84,8 @@ public class Strand {
 	 * @return New strand
 	 */
 	public Strand getComplementaryRnaStrand() {
-		Strand strand = new Strand(length);
-		for(int i = length-1; i >= 0; i--) {
+		Strand strand = new Strand(bases.length);
+		for(int i = bases.length-1; i >= 0; i--) {
 			if(bases[i]!= null) {
 				strand.addNucleotideToEnd(bases[i].getDnaComplement());
 			}
@@ -102,7 +100,7 @@ public class Strand {
 	 * @return int length
 	 */
 	public int getLength(){
-		return length;
+		return bases.length;
 	}
 	/**
 	 * Wrapper for strand position
@@ -111,55 +109,29 @@ public class Strand {
 	public int[] getPos() {
 		return new int[] {x,y,r};
 	}
+	/**
+	 * Gets the index of the strand
+	 * (Or the amount of nucleotides that have been added
+	 * with addNucleotideToEnd())
+	 * @return int
+	 */
 	public int getIndex() {
 		return index;
 	}
 	/**
-	 * Wrapper for rotation of nucleotide
-	 * @return int rotation
-	 */
-	public int getRotation() {
-		return r;
-	}
-	/**
-	 * Wrapper for array of bases in strand
-	 * @return Array of nucleotides in strand
-	 */
-	public Nucleotide[] getBases() {
-		return bases.clone();
-	}
-	/**
-	* Returns Nucleotide at specified position
-	* @param pos int of the index you want the nucleotide of
-	* @return Nucleotide at pos in strand
+	* Sets the position of the strands left most corner with default rotation
+	* @param x x pos
+	* @param y y pos
+	* @param r rotation 0= straight left
 	*/
-	public Nucleotide getNucleotide(int pos){
-		if( pos < length){
-			return bases[pos];
-		}
-		else{
-			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	/**
-	 * Sets the position of the strands left most corner with default rotation
-	 * @param x x pos
-	 * @param y y pos
-	 */
+	public void setPos(int x,int y,int r){
+	 	this.x=x;
+	 	this.y=y;
+		this.r=r;
+ 	}
 	public void setPos(int x,int y){
 		this.x=x;
 		this.y=y;
-	}
-	/**
-	 * Sets the position of the strands left most corner with default rotation
-	 * @param x x pos
-	 * @param y y pos
-	 * @param r rotation 0= straight left
-	 */
-	public void setPos(int x,int y,int r){
-		this.x=x;
-		this.y=y;
-		this.r=r;
 	}
 	/**
 	 * Sets the rotation
@@ -169,12 +141,25 @@ public class Strand {
 		this.r = r;
 	}
 	/**
+	* Returns Nucleotide at specified position
+	* @param pos int of the index you want the nucleotide of
+	* @return Nucleotide at pos in strand
+	*/
+	public Nucleotide getNucleotide(int pos){
+		if( pos < bases.length){
+			return bases[pos];
+		}
+		else{
+			throw new IllegalArgumentException("Expected pos to be less than length");
+		}
+	}
+	/**
 	*Sets nucleotide at specified position to specified nucleotide
 	* @param Pos, position to replace
 	* @param Nucleotide to put at pos
 	*/
 	public void setNucleotide(int pos, Nucleotide nucleotide){
-		if( pos < length){
+		if(pos < bases.length){
 			bases[pos]=nucleotide;
 		}
 		else{
@@ -186,36 +171,11 @@ public class Strand {
 	* @param Pos: Index you want to remove
 	*/
 	public void removeNucleotide(int pos){
-		if( pos < length){
+		if( pos < bases.length){
 			bases[pos]=null;
 		}
 		else{
 			throw new IllegalArgumentException("Expected pos to be less than length");
-		}
-	}
-	public void addNucleotideToStart(Nucleotide nucleotide) {
-		for(int i=length-1; i > 0; i--) {
-			bases[i] = bases[i-1];
-		}
-		bases[0] = nucleotide;
-	}
-	public void shift(){
-		for(int i = 0; i < length-1;i++){
-			bases[i]=bases[i+1];
-		}
-		bases[length-1] =null;
-	}
-	/**
-	 * Adds dna or rna Nucleotide to strand
-	 * @param Nucleotide
-	 */
-	public void addNucleotideToEnd(Nucleotide nucleotide) {
-		if(index < length) {
-			bases[index]= nucleotide;
-			index++;
-		}
-		else {
-			System.out.println("Strand full");
 		}
 	}
 	/**
@@ -224,7 +184,7 @@ public class Strand {
 	*@param Pos. Position of nucleotide that the bond is attatched to the suger
 	*/
 	public void toggleBond(int pos){
-		if( pos < length){
+		if( pos < bases.length){
 			bonds[pos] = !bonds[pos];
 		}
 		else{
@@ -232,11 +192,40 @@ public class Strand {
 		}
 	}
 	/**
+	 * Adds dna or rna Nucleotide to bigening of strand
+	 * @param Nucleotide
+	 */
+	public void addNucleotideToStart(Nucleotide nucleotide) {
+		for(int i=bases.length-1; i > 0; i--) {
+			bases[i] = bases[i-1];
+		}
+		bases[0] = nucleotide;
+	}
+	public void shift(){
+		for(int i = 0; i < bases.length-1;i++){
+			bases[i]=bases[i+1];
+		}
+		bases[bases.length-1] =null;
+	}
+	/**
+	 * Adds dna or rna Nucleotide to end of strand
+	 * @param Nucleotide
+	 */
+	public void addNucleotideToEnd(Nucleotide nucleotide) {
+		if(index < bases.length) {
+			bases[index]= nucleotide;
+			index++;
+		}
+		else {
+			System.out.println("Strand full");
+		}
+	}
+	/**
 	 * Splits strand into 2
 	 * @params pos- returns strand[0:pos]
 	 */
 	public Strand splitStrand(int pos) {
-		if( pos <= length){
+		if( pos <= bases.length){
 			Strand strand = new Strand(pos,x,y,r);
 			for(int i = 0; i < pos; i++) {
 				strand.addNucleotideToEnd(bases[i]);
@@ -260,10 +249,10 @@ public class Strand {
 		    gc.rotate(r);
 		    gc.translate(-x, -y);
 		}
-		for(int i = 0; i < length; i++) {
+		for(int i = 0; i < bases.length; i++) {
 			if(bases[i] != null){
 				bases[i].draw(gc,x2,y);
-				if(i+1< length){
+				if(i+1< bases.length){
 					if(bases[i+1] != null && bonds[i]){
 						gc.strokeLine(x2+IMAGESIZE*.81, y+IMAGESIZE*.81, x2+IMAGESIZE*1.10, y+IMAGESIZE*.73);
 					}
@@ -278,7 +267,7 @@ public class Strand {
 	@Override
 	public String toString() {
 		String result = "";
-		for(int i = 0; i < length; i++) {
+		for(int i = 0; i < bases.length; i++) {
 			if(bases[i] == null) {
 				result += "_";
 			}
@@ -295,9 +284,8 @@ public class Strand {
 		}
 		Strand strand = (Strand) o;
 		if(bases.length == strand.getLength()) {
-			Nucleotide[] bases2 = strand.getBases();
-			for(int i = 0; i < length; i++) {
-				if(!(bases[i].equals(bases2[i]))) {
+			for(int i = 0; i < bases.length; i++) {
+				if(!(bases[i].equals(strand.getNucleotide(i)))) {
 					return false;
 				}
 			}

@@ -20,6 +20,10 @@ public class PrimeZone{
 		zone = new int[][]{coords, nucleotide};
 		helix = new Helix[]{helix1,helix2};
 	}
+	/**
+	 * Gets the x,y coords of the center of the PrimeZone
+	 * @return int[] {x,y}
+	 */
 	public int[] getCoords(){
 	  return zone[0];
 	}
@@ -39,28 +43,9 @@ public class PrimeZone{
 	    }
 	}
 	/**
-	 * Adds a nucleotide to the helix and position specified by the primezone
-	 * @param nucleotide
-	 */
-	public void addNucleotide(Nucleotide nucleotide){
-	  helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
-	}
-	public void addComplementaryRnaNucleotide() {
-		int length = helix[zone[1][0]].getLength();
-		Helix h = helix[zone[1][0]];
-		int pos;
-		int pos2;
-		if(zone[1][0] == 0) {
-			pos = zone[1][2]-1;
-			pos2 =length -zone[1][2];
-		}
-		else {
-			pos = helix[zone[1][0]].getIndex()-zone[1][2];
-			pos2 = length-h.getIndex()+zone[1][2]-1;
-		}
-		Nucleotide newNucleotide = h.getNucleotide((zone[1][1]+1)%2,pos).getRnaComplement();
-		h.setNucleotide(zone[1][1], pos2, newNucleotide);
-	}
+	* Gets the complementary Dna nucleotide to the nucleotide position this PrimeZone
+	* is linked to
+	*/
 	public Nucleotide getComplmentaryDnaNucleotide() {
 		Helix h = helix[zone[1][0]];
 		int pos;
@@ -72,6 +57,10 @@ public class PrimeZone{
 		}
 		return h.getNucleotide((zone[1][1]+1)%2,pos).getDnaComplement();
 	}
+	/**
+	* Gets the complementary Rna nucleotide to the nucleotide position this PrimeZone
+	* is linked to
+	*/
 	public Nucleotide getComplmentaryRnaNucleotide() {
 		Helix h = helix[zone[1][0]];
 		int pos;
@@ -82,6 +71,29 @@ public class PrimeZone{
 			pos = helix[zone[1][0]].getIndex()-zone[1][2];
 		}
 		return h.getNucleotide((zone[1][1]+1)%2,pos).getRnaComplement();
+	}
+	/**
+	 * Adds a nucleotide to the helix and position specified by the primezone
+	 * @param nucleotide
+	 */
+	public void addNucleotide(Nucleotide nucleotide){
+	  helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
+	}
+	/**
+	 * Adds the complementary Rna nucleotide to the nucleotide position this PrimeZone
+	 * is linked to
+	 */
+	public void addComplementaryRnaNucleotide() {
+		int length = helix[zone[1][0]].getLength();
+		Helix h = helix[zone[1][0]];
+		int pos;
+		if(zone[1][0] == 0) {
+			pos =length -zone[1][2];
+		}
+		else {
+			pos = length-h.getIndex()+zone[1][2]-1;
+		}
+		h.setNucleotide(zone[1][1], pos, getComplmentaryRnaNucleotide());
 	}
 	/**
 	 * Toggles the bond of the nucleotide and helix specified in init

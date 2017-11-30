@@ -11,14 +11,14 @@ import nucleotides.*;
  */
 public class Machine {
 	//Original xy of center of first helix
-	private int xs;
-	private int ys;
+	private static int XS;
+	private static int YS;
 	//Xy of lower, rightside up helix
-	private int x1;
-	private int y1;
+	private int lowerX;
+	private int lowerY;
 	//Xy of upper upsidedown helx
-	private int x2;
-	private int y2;
+	private int upperX;
+	private int upperY;
 	private static int LENGTH;
 	private int unzipIndex = 0;
 	private int unzipRange;
@@ -31,7 +31,7 @@ public class Machine {
 	private PrimeZone generateZone(int helix,int strand,int pos,boolean flag){
 		double len = Nucleotide.getImageSize()*(pos-1);
 		double x = (helicase.getPos()-50)-len*Math.cos(Math.toRadians(helix == 0 ? -30:30));
-		double y = ys + len*Math.sin(Math.toRadians(helix == 0 ? -30:30));
+		double y = YS + len*Math.sin(Math.toRadians(helix == 0 ? -30:30));
 		if(strand == 0&&flag){
 			y+=Nucleotide.getImageSize();
 		}
@@ -42,15 +42,38 @@ public class Machine {
 		this.unzipRange = unzipRange;
 		this.root = root;
 		int[] pos = helix.getPos();
-		xs = pos[0]-Nucleotide.getImageSize();
-		ys= pos[1]+Nucleotide.getImageSize();
-		x2 =(int)(xs-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
-		y2 = (int)(ys-Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30))-25);
+		XS = pos[0]-Nucleotide.getImageSize();
+		YS= pos[1]+Nucleotide.getImageSize();
+		upperX =(int)(XS-Nucleotide.getImageSize()*(LENGTH-1)*Math.cos(Math.toRadians(30)));
+		upperY = (int)(YS-Nucleotide.getImageSize()*(LENGTH+1)*Math.sin(Math.toRadians(30))-25);
 		originalHelix = helix;
 		upperHelix = new Helix(new Strand(LENGTH),false);
 		lowerHelix = new Helix(new Strand(LENGTH),false);
-		helicase = new Helicase(xs, ys,unzipRange,this,root);
+		helicase = new Helicase(XS, YS,unzipRange,this,root);
 		manager = new PrimeZoneManager();
+	}
+	/**
+	 * Returns array of PrimeZones of given type
+	 * @param  int type- Type of primezone
+	 * @return  Array of primezones
+	 */
+	public PrimeZone[] getPrimeZone(int type){
+		return manager.getZones(type);
+	}
+	/**
+	 * Returns weather or not the machine is unzipped to current limit
+	 * @return boolean
+	 */
+	public boolean isUnzipped() {
+		return helicase.isUnzipped();
+	}
+	/**
+	 * Sets how far the machine is allowed to unzip
+	 * @param int- Limit of how many nucleotides the machine can unzip
+	 */
+	public void setUnzipRange(int newUnzip) {
+		unzipRange = newUnzip;
+		helicase.setUnzipLength(newUnzip);
 	}
 	/**
 	 * Unzips the helix that Helicase is bound to by one nucleotide
@@ -65,11 +88,11 @@ public class Machine {
 			originalHelix.removeNucleotide(0,unzipIndex);
 	  	//Edit the positions accounting for added nucleotides
 			int h = Nucleotide.getImageSize()*(unzipIndex+1);
-			x1=(int)xs+h-(int)(h*Math.cos(Math.toRadians(-30)));
-			y1=(int)ys+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
-			x2 += Nucleotide.getImageSize();
-			upperHelix.setPos(x2, y2,30);
-			lowerHelix.setPos(x1, y1,-30);
+			lowerX=(int)XS+h-(int)(h*Math.cos(Math.toRadians(-30)));
+			lowerY=(int)YS+h+(int)(h*Math.sin(Math.toRadians(-30)))-Nucleotide.getImageSize();
+			upperX += Nucleotide.getImageSize();
+			upperHelix.setPos(upperX, upperY,30);
+			lowerHelix.setPos(lowerX, lowerY,-30);
 			unzipIndex++;
 		}
 	}
@@ -103,16 +126,6 @@ public class Machine {
 		}
 		new DragableNucleotide(spawnPosX,spawnPosY,type,manager,root);
 		manager.addZone(type,zone);
-	}
-	public PrimeZone[] getPrimeZone(int type){
-		return manager.getZones(type);
-	}
-	public boolean isUnzipped() {
-		return helicase.isUnzipped();
-	}
-	public void setUnzipRange(int newUnzip) {
-		unzipRange = newUnzip;
-		helicase.setUnzipLength(newUnzip);
 	}
 	/**
 	 * Draws all the helixes the machine controls.

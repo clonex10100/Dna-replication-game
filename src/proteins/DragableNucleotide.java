@@ -9,12 +9,12 @@ import nucleotides.Nucleotide;
 public class DragableNucleotide{
   private ImageView iv;
   private static int SIZE = 70;
-  private Image image;
+  private static Image IMAGE;
   private int type;
   private PrimeZoneManager zones;
   private ImageView createIv(double x, double y) {
     ImageView iv = new ImageView();
-    iv.setImage(image);
+    iv.setImage(IMAGE);
     iv.setSmooth(true);
     iv.setPickOnBounds(true);
     iv.setCache(true);
@@ -37,10 +37,10 @@ public class DragableNucleotide{
   }
   public DragableNucleotide(int x, int y,int type,PrimeZoneManager zones,Group root) {
     switch(type){
-      case 1: image = new Image("a.png",SIZE,SIZE,false,false); break;
-      case 2: image = new Image("t.png",SIZE,SIZE,false,false); break;
-      case 3: image = new Image("g.png",SIZE,SIZE,false,false); break;
-      case 4: image = new Image("c.png",SIZE,SIZE,false,false); break;
+      case 1: IMAGE = new Image("a.png",SIZE,SIZE,false,false); break;
+      case 2: IMAGE = new Image("t.png",SIZE,SIZE,false,false); break;
+      case 3: IMAGE = new Image("g.png",SIZE,SIZE,false,false); break;
+      case 4: IMAGE = new Image("c.png",SIZE,SIZE,false,false); break;
     }
     iv = createIv((double)(x),(double)(y));
     this.zones=zones;

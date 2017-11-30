@@ -14,7 +14,8 @@ public class PrimeZoneManager {
 		/*
 		 * 0: Primase
 		 * 1-4: Draggable Nucleotide
-		 * 5: Ligase
+		 * 5: DnaPolimerace
+		 * 6: Ligase
 		 */
 		ZoneMap = new HashMap<Integer,ArrayList<PrimeZone>>();
 		ZoneMap.put(0,new ArrayList<PrimeZone>());
@@ -23,6 +24,33 @@ public class PrimeZoneManager {
 		ZoneMap.put(3,new ArrayList<PrimeZone>());
 		ZoneMap.put(4,new ArrayList<PrimeZone>());
 		ZoneMap.put(5,new ArrayList<PrimeZone>());
+	}
+	/**
+	* Checks if draggable is in it's PrimeZone
+	* And if it is, returns true and performs the zones
+	* specified action
+	* @param  double x-Draggable x
+	* @param  double y-Draggable y
+	* @param  int    type-Type
+	* @return  boolean
+	*/
+	public boolean isInZone(double x, double y, int type) {
+		for(int i = 0; i < ZoneMap.get(type).size();i++) {
+			if(ZoneMap.get(type).get(i).inRange(x, y)) {
+				ZoneMap.get(type).get(i).addComplementaryRnaNucleotide();
+				ZoneMap.get(type).remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	* Gets array of zones with tag p
+	* @param p=0,1,2
+	* @return Array of zones
+	*/
+	public PrimeZone[] getZones(int p) {
+		return ZoneMap.get(p).toArray(new PrimeZone[0]);
 	}
 	/**
 	 * Adds a zone with tag p to zone manager
@@ -40,25 +68,6 @@ public class PrimeZoneManager {
 	 */
 	public boolean removeZone(int p,PrimeZone zone) {
 		return ZoneMap.get(p).remove(zone);
-	}
-	/**
-	 * Gets array of zones with tag p
-	 * @param p=0,1,2
-	 * @return Array of zones
-	 */
-	public PrimeZone[] getZones(int p) {
-		return ZoneMap.get(p).toArray(new PrimeZone[0]);
-	}
-
-	public boolean isInZone(double x, double y, int p) {
-		for(int i = 0; i < ZoneMap.get(p).size();i++) {
-			if(ZoneMap.get(p).get(i).inRange(x, y)) {
-				ZoneMap.get(p).get(i).addComplementaryRnaNucleotide();
-				ZoneMap.get(p).remove(i);
-				return true;
-			}
-		}
-		return false;
 	}
 	public void draw(GraphicsContext gc){
 		for(int i = 0; i < ZoneMap.get(0).size(); i++ ){

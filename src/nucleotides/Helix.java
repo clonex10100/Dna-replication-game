@@ -45,40 +45,44 @@ public class Helix {
 	public int[] getPos() {
 		return new int[] {x,y-imageSize,r};
 	}
-	public int getIndex() {
-		return strands[0].getIndex();
-	}
 	/**
 	 * Gets the length of helix
-	 * @return int length
-	 */
+		* @return int length
+	*/
 	public int getLength() {
 		return length;
 	}
 	/**
-	 * Get nucleotide
-	 * @param Stard, 1 or 2 for strand 1 or 2
-	 * @param Pos on strand
-	 */
-	public Nucleotide getNucleotide(int strand, int pos) {
-		return strands[strand].getNucleotide(pos);
+	* Returns the index of the leading strand
+	* @return index- integer
+	*/
+	public int getIndex() {
+		return strands[0].getIndex();
 	}
 	/**
 	 * Sets the position of helix from the top left
 	 * @param x- x position
 	 * @param y- y position
+	 * @param r- rotation of helix
 	 */
-	public void setPos(int x,int y) {
-		this.x = x;
-		this.y= y+imageSize;
-		this.updateStrandPos();
-
-	}
 	public void setPos(int x,int y,int r) {
 		this.x = x;
 		this.y = y+imageSize;
 		this.r = r;
 		this.updateStrandPos();
+	}
+	public void setPos(int x,int y) {
+		this.x = x;
+		this.y= y+imageSize;
+		this.updateStrandPos();
+	}
+	/**
+	* Get nucleotide
+	* @param Stard, 1 or 2 for strand 1 or 2
+	* @param Pos on strand
+	*/
+	public Nucleotide getNucleotide(int strand, int pos) {
+			return strands[strand].getNucleotide(pos);
 	}
 	/**
 	 * Sets nucleotide in specified strand at specified position
@@ -90,9 +94,6 @@ public class Helix {
 		strands[strand].setNucleotide(pos,nucleotide);
 		this.updateStrandPos();
 	}
-	public void shift(int strand){
-		strands[strand].shift();
-	}
 	/**
 	 * Removes nucleotide in specified strand at specified postion
 	 * @param strand- int 1 or 2
@@ -102,13 +103,28 @@ public class Helix {
 		strands[strand].removeNucleotide(pos);
 	}
 	/**
+	* Toggles the bond between two nucleotides on the specified strand
+	* @param strand- int 1 or 2
+	* @param pos- pos > 0 and pos < length
+	*/
+	public void toggleBond(int strand, int pos) {
+		strands[strand].toggleBond(pos);
+	}
+	/**
 	 * Adds nucleotide to start of strand
 	 * @param strand- int 1 or 2
-	 * @param nucleotide
+	 * @param nucleotide- Nucleotide to adding
 	 */
 	public void addNucleotideToStart(int strand, Nucleotide nucleotide) {
 		strands[strand].addNucleotideToStart(nucleotide);
-		//strands[(strand+1)%2].addNucleotideToEnd(null);
+	}
+	/**
+	* Shifts all nucleotides in strand over one
+	* Usefull to keep both strands aligned after adding to one of them
+	* @param strand- 0 or 1
+	*/
+	public void shift(int strand){
+		strands[strand].shift();
 	}
 	/**
 	 * Adds nucleotide to end of strand
@@ -119,14 +135,6 @@ public class Helix {
 		strands[strand].addNucleotideToEnd(nucleotide);
 	}
 	/**
-	 * Toggles the bond between two nucleotides on the specified strand
-	 * @param strand- int 1 or 2
-	 * @param pos- pos > 0 and pos < length
-	 */
-	public void toggleBond(int strand, int pos) {
-		strands[strand].toggleBond(pos);
-	}
-	/**
 	 * Draws both strands next to each other
 	 * @param gc- graphics context to draw helix on
 	 * @param x- left start of the drawing
@@ -134,9 +142,9 @@ public class Helix {
 	 */
 	public void draw(GraphicsContext gc) {
 		gc.save();
-	    	gc.translate(x, y-imageSize);
-	    	gc.rotate(r);
-	    	gc.translate(-x, -(y-imageSize));
+	  gc.translate(x, y-imageSize);
+	  gc.rotate(r);
+	  gc.translate(-x, -(y-imageSize));
 		strands[0].draw(gc);
 		strands[1].draw(gc);
 		gc.restore();
