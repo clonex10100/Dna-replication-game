@@ -14,7 +14,7 @@ import nucleotides.Helix;
 import nucleotides.Nucleotide;
 import nucleotides.Strand;
 import proteins.*;
-public class HelicaseTesting extends Application{
+public class MainGameLoop extends Application{
 	public static void main(String[] args){
 		launch(args);
 	}

@@ -76,6 +76,5 @@ public class PrimeZoneManager {
 		for(int i = 0; i < ZoneMap.get(4).size(); i++ ){
 			ZoneMap.get(4).get(i).draw(4,gc);
 		}
-
 	}
 }

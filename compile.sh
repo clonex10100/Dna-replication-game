@@ -1,3 +1,3 @@
-javac -d bin src/nucleotides/*.java src/proteins/*.java src/gameStages/HelicaseTesting.java
+javac -d bin src/nucleotides/*.java src/proteins/*.java src/gameStages/MainGameLoop.java
 cd bin
-java gameStages.HelicaseTesting
+java gameStages.MainGameLoop
