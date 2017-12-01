@@ -131,7 +131,7 @@ public class PrimeZone{
 		if(type == 0) {
 			gc.strokeOval(zone[0][0]-RANGE/2,zone[0][1]-RANGE/2,RANGE,RANGE);
 		}
-		else {
+		else if(type > 0 && type < 5) {
 			gc.setFill(Color.BROWN);
 			gc.fillOval(zone[0][0]-RANGE/2,zone[0][1]-RANGE/2,RANGE/2,RANGE/2);
 		}

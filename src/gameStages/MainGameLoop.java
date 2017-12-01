@@ -14,6 +14,7 @@ import nucleotides.Helix;
 import nucleotides.Nucleotide;
 import nucleotides.Strand;
 import proteins.*;
+import java.util.ArrayList;
 public class MainGameLoop extends Application{
 	public static void main(String[] args){
 		launch(args);
@@ -39,6 +40,10 @@ public class MainGameLoop extends Application{
 		long lastNano = 0;
 		int upperIndex = unzipRange;
 		int lowerIndex = 2;
+		boolean done = false;
+		ArrayList<Integer> upperIndexs = new ArrayList<Integer>();
+		ArrayList<Integer> lowerIndexs = new ArrayList<Integer>();
+		int unzipped = 0;
 	  public void handle(long currentNanoTime){
 	  	if(currentNanoTime - lastNano > 900000) {
     		gc.setFill(new Color(1,1,1, 1.0) );
@@ -52,6 +57,8 @@ public class MainGameLoop extends Application{
 					//Add two polimerace zones.
 	     		machine.addZone(0,0,0,upperIndex,50, 300);
 	     		machine.addZone(0,1,1,lowerIndex,50,400);
+					upperIndexs.add(upperIndex);
+					lowerIndexs.add(lowerIndex);
 	     		upperIndex--;
 	     		lowerIndex++;
 	     		stage++;
@@ -74,7 +81,12 @@ public class MainGameLoop extends Application{
 	     		}
 	     		if(empty) {
 						if(upperIndex==1){
-							stage++;
+							if(done){
+								stage = 7;
+							}
+							else{
+								stage++;
+							}
 						}
 						else{
 		        	machine.addComplementaryNucleotideZone(0,0,upperIndex,50,300);
@@ -86,16 +98,44 @@ public class MainGameLoop extends Application{
 				}
 	      else if(stage==4) {
 	      	machine.setUnzipRange(10);
+					unzipped+=10;
 					upperIndex = unzipRange+1;
 					lowerIndex = 2;
 	      	stage = 5;
 	      }
 				else if(stage ==6){
 					machine.addZone(0,1,1,lowerIndex,50,300);
+					lowerIndexs.add(lowerIndex);
 					machine.addComplementaryNucleotideZone(0,0,upperIndex,50,400);
 					upperIndex--;
 					lowerIndex++;
 					stage=2;
+					done = true;
+				}
+				else if(stage == 7){
+					for(int i = 0; i < upperIndexs.size();i++){
+						machine.addZone(5,0,0,upperIndexs.get(i)+5,50, 300);
+					}
+
+					for(int i = 0; i < lowerIndexs.size();i++){
+						machine.addZone(5,1,1,lowerIndexs.get(i)+5,50, 400);
+					}
+					stage++;
+				}
+				else if(stage == 8){
+					if(machine.getPrimeZone(5).length == 0){
+						stage++;
+					}
+				}
+				else if(stage == 9){
+					for(int i = 0; i < upperIndexs.size();i++){
+						machine.addZone(6,0,0,upperIndexs.get(i)+5,50, 300);
+					}
+
+					for(int i = 0; i < lowerIndexs.size();i++){
+						machine.addZone(6,0,0,lowerIndexs.get(i)+5,50, 400);
+					}
+					stage++;
 				}
 	      machine.draw(gc);
 	      lastNano = currentNanoTime;

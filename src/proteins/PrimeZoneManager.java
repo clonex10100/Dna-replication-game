@@ -24,6 +24,7 @@ public class PrimeZoneManager {
 		ZoneMap.put(3,new ArrayList<PrimeZone>());
 		ZoneMap.put(4,new ArrayList<PrimeZone>());
 		ZoneMap.put(5,new ArrayList<PrimeZone>());
+		ZoneMap.put(6,new ArrayList<PrimeZone>());
 	}
 	/**
 	* Checks if draggable is in it's PrimeZone
@@ -44,6 +45,7 @@ public class PrimeZoneManager {
 					case 3: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
 					case 4: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
 					case 5: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;
+					case 6: ZoneMap.get(type).get(i).toggleBond();break;
 				}
 				ZoneMap.get(type).remove(i);
 				return true;
@@ -94,6 +96,9 @@ public class PrimeZoneManager {
 		}
 		for(int i = 0; i < ZoneMap.get(5).size(); i++ ){
 			ZoneMap.get(5).get(i).draw(5,gc);
+		}
+		for(int i = 0; i < ZoneMap.get(6).size(); i++ ){
+			ZoneMap.get(6).get(i).draw(6,gc);
 		}
 	}
 }
