@@ -126,10 +126,10 @@ public class Strand {
 	* @param r rotation 0= straight left
 	*/
 	public void setPos(int x,int y,int r){
-	 	this.x=x;
-	 	this.y=y;
+		this.x=x;
+		this.y=y;
 		this.r=r;
- 	}
+	}
 	public void setPos(int x,int y){
 		this.x=x;
 		this.y=y;
@@ -250,10 +250,10 @@ public class Strand {
 	public void draw(GraphicsContext gc) {
 		int x2 = x;
 		if(r!=0) {
-		    gc.save();
-		    gc.translate(x, y);
-		    gc.rotate(r);
-		    gc.translate(-x, -y);
+				gc.save();
+				gc.translate(x, y);
+				gc.rotate(r);
+				gc.translate(-x, -y);
 		}
 		for(int i = 0; i < bases.length; i++) {
 			if(bases[i] != null){

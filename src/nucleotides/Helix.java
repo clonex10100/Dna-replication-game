@@ -142,9 +142,9 @@ public class Helix {
 	 */
 	public void draw(GraphicsContext gc) {
 		gc.save();
-	  gc.translate(x, y-imageSize);
-	  gc.rotate(r);
-	  gc.translate(-x, -(y-imageSize));
+		gc.translate(x, y-imageSize);
+		gc.rotate(r);
+		gc.translate(-x, -(y-imageSize));
 		strands[0].draw(gc);
 		strands[1].draw(gc);
 		gc.restore();

@@ -25,7 +25,7 @@ public class PrimeZone{
 	 * @return int[] {x,y}
 	 */
 	public int[] getCoords(){
-	  return zone[0];
+		return zone[0];
 	}
 	/**
 	 * Checked if given coords are within the primezone
@@ -37,10 +37,10 @@ public class PrimeZone{
 		if((zone[0][0] - RANGE < x && x < zone[0][0] + RANGE) &&
 			(zone[0][1] - RANGE < y && y < zone[0][1] + RANGE)){
 			return true;
-	    }
-	    else{
-	    	return false;
-	    }
+			}
+			else{
+				return false;
+			}
 	}
 	/**
 	* Gets the complementary Dna nucleotide to the nucleotide position this PrimeZone
@@ -77,7 +77,7 @@ public class PrimeZone{
 	 * @param nucleotide
 	 */
 	public void addNucleotide(Nucleotide nucleotide){
-	  helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
+		helix[zone[1][0]].setNucleotide(zone[1][1],zone[1][2],nucleotide);
 	}
 	/**
 	 * Adds the complementary Rna nucleotide to the nucleotide position this PrimeZone

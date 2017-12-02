@@ -26,7 +26,7 @@ public class Helicase {
 		circle.setOnMousePressed((t) -> {
 			cxs = t.getSceneX();
 			Circle c = (Circle) (t.getSource());
-		    c.toFront();
+				c.toFront();
 		});
 		circle.setOnMouseDragged((t) -> {
 			Circle c = (Circle) (t.getSource());
