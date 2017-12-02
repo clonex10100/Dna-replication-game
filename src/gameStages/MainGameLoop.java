@@ -116,8 +116,6 @@ public class MainGameLoop extends Application{
 					done = true;
 				}
 				else if(stage == 7){
-
-					System.out.println("Loops");
 					for(int i = 0; i < PolimeraceUpperZones.size();i++){
 						machine.addZone(5,0,0,PolimeraceUpperZones.get(i),50, 300);
 					}
@@ -129,7 +127,6 @@ public class MainGameLoop extends Application{
 				}
 				else if(stage == 8){
 					if(machine.getPrimeZone(5).length == 0){
-						System.out.println("Polydone");
 						stage++;
 					}
 				}

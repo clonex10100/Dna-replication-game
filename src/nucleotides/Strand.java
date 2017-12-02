@@ -259,8 +259,6 @@ public class Strand {
 			if(bases[i] != null){
 				bases[i].draw(gc,x2,y);
 				if(i+1< bases.length){
-					//System.out.println(Arrays.asList(bonds).indexOf(false));
-					//System.out.println(Arrays.toString(bonds));
 					if(bases[i+1] != null && bonds[i]){
 						gc.strokeLine(x2+IMAGESIZE*.81, y+IMAGESIZE*.81, x2+IMAGESIZE*1.10, y+IMAGESIZE*.73);
 					}

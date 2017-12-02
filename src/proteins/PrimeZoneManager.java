@@ -38,7 +38,6 @@ public class PrimeZoneManager {
 	public boolean isInZone(double x, double y, int type) {
 		for(int i = 0; i < ZoneMap.get(type).size();i++) {
 			if(ZoneMap.get(type).get(i).inRange(x, y)) {
-				System.out.println(type);
 				switch(type){
 					case 0: ZoneMap.get(type).get(i).addComplementaryRnaNucleotide(); ZoneMap.get(type).get(i).toggleBond();break;
 					case 1: ZoneMap.get(type).get(i).addComplementaryDnaNucleotide();break;

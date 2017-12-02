@@ -42,8 +42,8 @@ public class PrimeZoneActivater{
       case 2: size = 70;image = new Image("t.png",size,size,false,false);break;
       case 3: size = 70;image = new Image("g.png",size,size,false,false);break;
       case 4: size = 70;image = new Image("c.png",size,size,false,false);break;
-      case 5: size = 100;image = new Image("primase.png",size,size,false,false);break;
-      case 6: size = 100;image = new Image("primase.png",size,size,false,false);break;
+      case 5: size = 100;image = new Image("polimerace.png",size,size,false,false);break;
+      case 6: size = 100;image = new Image("ligase.png",size,size,false,false);break;
     }
 		iv = createIv((double)(x),(double)(y));
 		this.zones = zones;
