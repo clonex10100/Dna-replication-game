@@ -72,4 +72,7 @@ public class Helicase {
 		unzipLength = length;
 		unzipped = false;
 	}
+	public void hide(){
+		helicase.setVisible(false);
+	}
 }

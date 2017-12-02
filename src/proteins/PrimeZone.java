@@ -111,9 +111,6 @@ public class PrimeZone{
 	 * Toggles the bond of the nucleotide and helix specified in init
 	 */
 	public void toggleBond(){
-		System.out.println(zone[1][0]);
-		System.out.println(zone[1][1]);
-		System.out.println(zone[1][2]);
 		if(1>0){
 				int length = helix[zone[1][0]].getLength();
 				Helix h = helix[zone[1][0]];
@@ -124,7 +121,9 @@ public class PrimeZone{
 			else {
 				pos = length-h.getIndex()+zone[1][2]-1;
 			}
-			helix[zone[1][0]].toggleBond(zone[1][1],pos);
+			if(pos < length && pos > 1){
+				helix[zone[1][0]].toggleBond(zone[1][1],pos);
+			}
 		}
 	}
 	public void draw(int type,GraphicsContext gc){

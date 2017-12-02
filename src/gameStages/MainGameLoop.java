@@ -23,10 +23,10 @@ public class MainGameLoop extends Application{
 	public void start(Stage stage) {
 		Group root = new Group();
 		Scene scene = new Scene(root);
-		final Canvas canvas = new Canvas(1200, 700);
+		final Canvas canvas = new Canvas(1000, 700);
 		root.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		int length = 15;
+		int length = 10;
 		int unzipRange = 5;
 		int xs = 150;
 		int ys = 300;
@@ -41,8 +41,9 @@ public class MainGameLoop extends Application{
 		int upperIndex = unzipRange;
 		int lowerIndex = 2;
 		boolean done = false;
-		ArrayList<Integer> upperIndexs = new ArrayList<Integer>();
-		ArrayList<Integer> lowerIndexs = new ArrayList<Integer>();
+		ArrayList<Integer> PolimeraceUpperZones = new ArrayList<Integer>();
+		ArrayList<Integer> PolimeraceLowerZones = new ArrayList<Integer>();
+		ArrayList<Integer> LigaseLowerZones = new ArrayList<Integer>();
 		int unzipped = 0;
 	  public void handle(long currentNanoTime){
 	  	if(currentNanoTime - lastNano > 900000) {
@@ -57,8 +58,9 @@ public class MainGameLoop extends Application{
 					//Add two polimerace zones.
 	     		machine.addZone(0,0,0,upperIndex,50, 300);
 	     		machine.addZone(0,1,1,lowerIndex,50,400);
-					upperIndexs.add(upperIndex);
-					lowerIndexs.add(lowerIndex);
+					PolimeraceUpperZones.add(upperIndex+5);
+					PolimeraceLowerZones.add(lowerIndex+5);
+					LigaseLowerZones.add(lowerIndex+5);
 	     		upperIndex--;
 	     		lowerIndex++;
 	     		stage++;
@@ -104,36 +106,36 @@ public class MainGameLoop extends Application{
 	      	stage = 5;
 	      }
 				else if(stage ==6){
-					machine.addZone(0,1,1,lowerIndex,50,300);
-					lowerIndexs.add(lowerIndex);
+
+					machine.addZone(0,1,1,lowerIndex-1,50,300);
+					PolimeraceLowerZones.add(lowerIndex-1);
 					machine.addComplementaryNucleotideZone(0,0,upperIndex,50,400);
+					machine.hide();
 					upperIndex--;
-					lowerIndex++;
 					stage=2;
 					done = true;
 				}
 				else if(stage == 7){
-					for(int i = 0; i < upperIndexs.size();i++){
-						machine.addZone(5,0,0,upperIndexs.get(i)+5,50, 300);
+
+					System.out.println("Loops");
+					for(int i = 0; i < PolimeraceUpperZones.size();i++){
+						machine.addZone(5,0,0,PolimeraceUpperZones.get(i),50, 300);
 					}
 
-					for(int i = 0; i < lowerIndexs.size();i++){
-						machine.addZone(5,1,1,lowerIndexs.get(i)+5,50, 400);
+					for(int i = 0; i < PolimeraceLowerZones.size();i++){
+						machine.addZone(5,1,1,PolimeraceLowerZones.get(i),50, 400);
 					}
 					stage++;
 				}
 				else if(stage == 8){
 					if(machine.getPrimeZone(5).length == 0){
+						System.out.println("Polydone");
 						stage++;
 					}
 				}
 				else if(stage == 9){
-					for(int i = 0; i < upperIndexs.size();i++){
-						machine.addZone(6,0,0,upperIndexs.get(i)+5,50, 300);
-					}
-
-					for(int i = 0; i < lowerIndexs.size();i++){
-						machine.addZone(6,0,0,lowerIndexs.get(i)+5,50, 400);
+					for(int i = 0; i < LigaseLowerZones.size();i++){
+						machine.addZone(6,1,1,LigaseLowerZones.get(i),50, 400);
 					}
 					stage++;
 				}
