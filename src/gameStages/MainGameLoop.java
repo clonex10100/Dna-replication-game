@@ -107,11 +107,11 @@ public class MainGameLoop extends Application{
 	      }
 				else if(stage ==6){
 
-					machine.addZone(0,1,1,lowerIndex-1,50,300);
-					PolimeraceLowerZones.add(lowerIndex-1);
+					machine.addZone(0,1,1,lowerIndex,50,300);
+					PolimeraceLowerZones.add(lowerIndex);
 					machine.addComplementaryNucleotideZone(0,0,upperIndex,50,400);
-					machine.hide();
 					upperIndex--;
+					lowerIndex++;
 					stage=2;
 					done = true;
 				}
