@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 public abstract class Nucleotide {
 	protected char base;
 	protected Image image;
-	protected ImageView iv;
 	//Todo: Scaling based on display window size
 	protected static int imageSize = 70;
 	/**
@@ -52,12 +51,12 @@ public abstract class Nucleotide {
 	 * @param r: The rotation, in degrees, you want to draw the nucleotide at. 0 would draw it with the base pointing up.
 	 */
 	public void draw(GraphicsContext gc, int x, int y, int r) {
-		ImageView iv = new ImageView(image);
-		iv.setRotate(r);
-		SnapshotParameters params = new SnapshotParameters();
-		params.setFill(Color.TRANSPARENT);
-		Image rotatedImage = iv.snapshot(params, null);
-		gc.drawImage(rotatedImage, x, y);
+		gc.save();
+		gc.translate(x, y);
+		gc.rotate(r);
+		gc.translate(-x, -y);
+		gc.drawImage(image, x, y);
+		gc.restore();
 	}
 	/**
 	 * Get a complementary DnaNucleotide
