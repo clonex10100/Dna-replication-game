@@ -88,7 +88,7 @@ public class Helix {
 		this.y= y;
 		this.updateStrandPos();
 	}
-	/** sets the rotation of helix. The center is the
+	/** sets the rotation of helix. The center is the 
 	 * top left corner
 	 * @param Rotation- Int < 360 and > -360
 	 */
@@ -154,7 +154,6 @@ public class Helix {
 		gc.translate(x, y-imageSize);
 		gc.rotate(r);
 		gc.translate(-x, -(y-imageSize));
-		gc.strokeLine(x,y,x+100,y);
 		strands[0].draw(gc);
 		strands[1].draw(gc);
 		gc.restore();

@@ -181,7 +181,7 @@ public class Strand {
 	*@param Pos. Position of nucleotide that the bond is attatched to the suger
 	*/
 	public void toggleBond(int pos){
-		if( pos < bases.size() && pos > 0){
+		if( pos < bases.size()){
 			bonds.set(pos,!bonds.get(pos));
 		}
 		else{

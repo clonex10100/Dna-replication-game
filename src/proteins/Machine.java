@@ -40,7 +40,7 @@ public class Machine {
 		int ly = (int)(YS-25+Math.sin(Math.toRadians(30))*(Nucleotide.getImageSize()*(unzipIndex-pos)));
 		//int ux = lx;
 		int uy =  (int)(YS+25-Math.sin(Math.toRadians(30))*(Nucleotide.getImageSize()*(unzipIndex-pos)));
-
+			
 		return new PrimeZone(new int[]{x,helix == 0 ? uy:ly},new int[]{helix,strand,pos},upperHelix,lowerHelix);
 	}
 	public Machine(Helix helix,int unzipRange,Group root){
@@ -89,7 +89,7 @@ public class Machine {
 			originalHelix.removeNucleotide(1,unzipIndex);
 			upperX=(int)(XS-Nucleotide.getImageSize()*(upperHelix.getLength()-1)*Math.cos(Math.toRadians(30)));
 			upperY = (int)(YS-Nucleotide.getImageSize()*(upperHelix.getLength()+1)*Math.sin(Math.toRadians(30))-25);
-
+		
 			//int h = Nucleotide.getImageSize()*(unzipIndex+1);
 			//int lx =XS+h-(int)(h*Math.cos(Math.toRadians(-30)))-(int)(Nucleotide.getImageSize()*.9);
 			//int ux = (int)(lx +Math.cos(Math.toRadians(60))*70*2);
