@@ -28,16 +28,19 @@ public class MainGameLoop extends Application{
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		int length = 10;
 		int unzipRange = 5;
-		int xs = 200;
-		int ys = 350;
-		Helix originalHelix = new Helix(Strand.getRandomStrand(10,0,"dna"),true);
+		int xs = 150;
+		int ys = 300;
+		Helix originalHelix = new Helix(Strand.getRandomStrand(length, "dna"),true);
 		originalHelix.setPos(xs, ys);
 		Machine machine = new Machine(originalHelix,unzipRange,root);
 		stage.setScene(scene);
 		stage.show();
 		new AnimationTimer(){
 		int stage = 0;
-		long lastNano = 0; int upperIndex = unzipRange-1; int lowerIndex = 0; boolean done = false;
+		long lastNano = 0;
+		int upperIndex = unzipRange;
+		int lowerIndex = 2;
+		boolean done = false;
 		ArrayList<Integer> PolimeraceUpperZones = new ArrayList<Integer>();
 		ArrayList<Integer> PolimeraceLowerZones = new ArrayList<Integer>();
 		ArrayList<Integer> LigaseLowerZones = new ArrayList<Integer>();
@@ -53,10 +56,10 @@ public class MainGameLoop extends Application{
 				}
 				else if(stage == 1) {
 					//Add two polimerace zones.
-					machine.addZone(0,0,1,upperIndex,50, 300);
-					machine.addZone(0,1,0,lowerIndex,50,400);
-					PolimeraceUpperZones.add(upperIndex);
-					PolimeraceLowerZones.add(lowerIndex);
+					machine.addZone(0,0,0,upperIndex,50, 300);
+					machine.addZone(0,1,1,lowerIndex,50,400);
+					PolimeraceUpperZones.add(upperIndex+5);
+					PolimeraceLowerZones.add(lowerIndex+5);
 					LigaseLowerZones.add(lowerIndex+5);
 					upperIndex--;
 					lowerIndex++;
@@ -79,7 +82,7 @@ public class MainGameLoop extends Application{
 						}
 					}
 					if(empty) {
-						if(upperIndex<0){
+						if(upperIndex==1){
 							if(done){
 								stage = 7;
 							}
@@ -88,8 +91,8 @@ public class MainGameLoop extends Application{
 							}
 						}
 						else{
-							machine.addComplementaryNucleotideZone(0,1,upperIndex,50,300);
-							machine.addComplementaryNucleotideZone(1,0,lowerIndex,50,400);
+							machine.addComplementaryNucleotideZone(0,0,upperIndex,50,300);
+							machine.addComplementaryNucleotideZone(1,1,lowerIndex,50,400);
 							upperIndex--;
 							lowerIndex++;
 						}

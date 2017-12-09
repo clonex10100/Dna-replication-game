@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
  *
  */
 public class Helix {
-	//{Upperstrand,lowerstrand}
 	private Strand[] strands;
 	private static int imageSize = Nucleotide.getImageSize();
 	private int length;
@@ -20,40 +19,22 @@ public class Helix {
 	private static double XSHIFT = 12;
 	private static double YSHIFT = imageSize*0.07;
 	private void updateStrandPos() {
-		strands[0].setPos(this.x,this.y);
-		strands[1].setPos((int)(this.x-XSHIFT), (int)(this.y+Nucleotide.getImageSize()-YSHIFT));
+		strands[0].setPos((int)(this.x-XSHIFT), (int)(this.y-YSHIFT));
+		strands[1].setPos(this.x+(int)(imageSize*length),this.y,180);
 	}
 	public Helix(Strand strand,boolean generateComplementaryStrand) {
-		this(strand, generateComplementaryStrand ? strand.getComplementaryDnaStrand():new Strand((strand.getType()+1)%2));
+		this(strand, generateComplementaryStrand ? strand.getComplementaryDnaStrand():new Strand(strand.getLength()));
 	}
 	public Helix(Strand strand1,Strand strand2) {
-		if(strand1.getLength() > strand2.getLength()) {
-			while(strand1.getLength()>strand2.getLength()){
-				strand2.addNucleotideToEnd(null);
-			}
+		if(strand1.getLength() != strand2.getLength()) {
+			throw new IllegalArgumentException("Strands must have the same length");
 		}
-		if(strand1.getType() == strand2.getType()){
-			throw new IllegalArgumentException("Strands must be opisite types");
-		}
-		this.length = strand1.getLength();
-		if(strand1.getType()==0){
-			int[] pos = strand1.getPos();
-			x = pos[0];
-			y = pos[1];
-			r = pos[2];
-			strands = new Strand[]{strand1,strand2};
-		}
-		else{
-			System.out.println(strand1.getPos()[0]);
-			System.out.println(strand1.getPos()[1]);
-			int[] pos = strand1.getPos();
-			x = pos[0]+(int)(XSHIFT);
-			y = pos[1]-Nucleotide.getImageSize()+(int)(YSHIFT);
-			r = pos[2];
-			System.out.println(Integer.toString(x)+" " + Integer.toString(y));
-			strands = new Strand[]{strand2,strand1};
-
-		}
+		strands = new Strand[] {strand1,strand2};
+		this.length = strands[0].getLength();
+		int[] pos = strands[0].getPos();
+		x = pos[0];
+		y = pos[1];
+		r = pos[2];
 		this.updateStrandPos();
 	}
 	/**
@@ -62,7 +43,7 @@ public class Helix {
 	 * @return y- right most coord
 	 */
 	public int[] getPos() {
-		return new int[] {x,y,r};
+		return new int[] {x,y-imageSize,r};
 	}
 	/**
 	 * Gets the length of helix
@@ -72,6 +53,13 @@ public class Helix {
 		return length;
 	}
 	/**
+	* Returns the index of the leading strand
+	* @return index- integer
+	*/
+	public int getIndex() {
+		return strands[0].getIndex();
+	}
+	/**
 	 * Sets the position of helix from the top left
 	 * @param x- x position
 	 * @param y- y position
@@ -79,21 +67,14 @@ public class Helix {
 	 */
 	public void setPos(int x,int y,int r) {
 		this.x = x;
-		this.y = y;
+		this.y = y+imageSize;
 		this.r = r;
 		this.updateStrandPos();
 	}
 	public void setPos(int x,int y) {
 		this.x = x;
-		this.y= y;
+		this.y= y+imageSize;
 		this.updateStrandPos();
-	}
-	/** sets the rotation of helix. The center is the 
-	 * top left corner
-	 * @param Rotation- Int < 360 and > -360
-	 */
-	public void setRotation(int r){
-		this.r = r;
 	}
 	/**
 	* Get nucleotide
@@ -130,18 +111,28 @@ public class Helix {
 		strands[strand].toggleBond(pos);
 	}
 	/**
+	 * Adds nucleotide to start of strand
+	 * @param strand- int 1 or 2
+	 * @param nucleotide- Nucleotide to adding
+	 */
+	public void addNucleotideToStart(int strand, Nucleotide nucleotide) {
+		strands[strand].addNucleotideToStart(nucleotide);
+	}
+	/**
+	* Shifts all nucleotides in strand over one
+	* Usefull to keep both strands aligned after adding to one of them
+	* @param strand- 0 or 1
+	*/
+	public void shift(int strand){
+		strands[strand].shift();
+	}
+	/**
 	 * Adds nucleotide to end of strand
 	 * @param strand- int 1 or 2
 	 * @param nucleotide
 	 */
 	public void addNucleotideToEnd(int strand, Nucleotide nucleotide) {
 		strands[strand].addNucleotideToEnd(nucleotide);
-		strands[(strand+1)%2].addNucleotideToEnd(null);
-		length++;
-	}
-	public void addNucleotideToEnd(Nucleotide nucleotide1, Nucleotide nucleotide2){
-		strands[0].addNucleotideToEnd(nucleotide1);
-		strands[1].addNucleotideToEnd(nucleotide2);
 	}
 	/**
 	 * Draws both strands next to each other

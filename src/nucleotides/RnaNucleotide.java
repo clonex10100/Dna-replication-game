@@ -15,6 +15,7 @@ public class RnaNucleotide extends Nucleotide{
 		case 'A': image = new Image("ra.png",imageSize,imageSize,true,false); break;
 		default: throw new IllegalArgumentException("Must be A, U, G, or c");
 		}
+		iv = new ImageView(image);
 	}
 	@Override
 	public DnaNucleotide getDnaComplement(){
