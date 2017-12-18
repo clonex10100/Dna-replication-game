@@ -15,7 +15,6 @@ public class DnaNucleotide extends Nucleotide{
 		case 'C': image = new Image("c.png",imageSize,imageSize,true,false); break;
 		default: throw new IllegalArgumentException("Expected A, T, G, or J");
 		}
-		iv = new ImageView(image);
 	}
 	@Override
 	public DnaNucleotide getDnaComplement(){

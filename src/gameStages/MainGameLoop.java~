@@ -89,6 +89,8 @@ public class MainGameLoop extends Application{
 							}
 						}
 						else{
+							System.out.println(lowerIndex);
+							System.out.println(unzipRange);
 							System.out.println(".");
 							machine.addComplementaryNucleotideZone(0,1,upperIndex,50,300);
 							machine.addComplementaryNucleotideZone(1,0,lowerIndex,50,400);
