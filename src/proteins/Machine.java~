@@ -28,10 +28,19 @@ public class Machine {
 	private Helicase helicase;
 	private Group root;
 	private PrimeZone generateZone(int helix,int strand,int pos,boolean flag){
+		//double len = Nucleotide.getImageSize()*(pos-1);
+		//double x = (helicase.getPos()-50)-len*Math.cos(Math.toRadians(helix == 0 ? -30:30));
+		//int h = Nucleotide.getImageSize()*
+		//double y = YS + len*Math.sin(Math.toRadians(helix == 0 ? -30:30));
+		//if(strand == 0&&flag){
+		//	y+=Nucleotide.getImageSize();
+		//}
 		int h = Nucleotide.getImageSize()*unzipIndex;
 		int x = (int)(XS+h+Nucleotide.getImageSize()-Math.cos(Math.toRadians(30))*(Nucleotide.getImageSize()*(unzipIndex-pos)));
 		int ly = (int)(YS-25+Math.sin(Math.toRadians(30))*(Nucleotide.getImageSize()*(unzipIndex-pos)));
+		//int ux = lx;
 		int uy =  (int)(YS+25-Math.sin(Math.toRadians(30))*(Nucleotide.getImageSize()*(unzipIndex-pos)));
+			
 		return new PrimeZone(new int[]{x,helix == 0 ? uy:ly},new int[]{helix,strand,pos},upperHelix,lowerHelix);
 	}
 	public Machine(Helix helix,int unzipRange,Group root){
