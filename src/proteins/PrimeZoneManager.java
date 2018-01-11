@@ -79,26 +79,10 @@ public class PrimeZoneManager {
 		return ZoneMap.get(p).remove(zone);
 	}
 	public void draw(GraphicsContext gc){
-		for(int i = 0; i < ZoneMap.get(0).size(); i++ ){
-			ZoneMap.get(0).get(i).draw(0,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(1).size(); i++ ){
-			ZoneMap.get(1).get(i).draw(1,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(2).size(); i++ ){
-			ZoneMap.get(2).get(i).draw(2,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(3).size(); i++ ){
-			ZoneMap.get(3).get(i).draw(3,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(4).size(); i++ ){
-			ZoneMap.get(4).get(i).draw(4,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(5).size(); i++ ){
-			ZoneMap.get(5).get(i).draw(5,gc);
-		}
-		for(int i = 0; i < ZoneMap.get(6).size(); i++ ){
-			ZoneMap.get(6).get(i).draw(6,gc);
+		for(int t = 0; t < 6; t++){
+			for(int i = 0; i < ZoneMap.get(t).size(); i++ ){
+				ZoneMap.get(t).get(i).draw(t,gc);
+			}
 		}
 	}
 }
