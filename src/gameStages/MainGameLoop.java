@@ -120,7 +120,7 @@ public class MainGameLoop extends Application{
 					}
 
 					for(int i = 0; i < PolimeraceLowerZones.size();i++){
-						machine.addZone(5,1,0,PolimeraceLowerZones.get(i),50, 400);
+						machine.addZone(5,1,0,PolimeraceLowerZones.get(i),50, 350 + 50 * i);
 					}
 					stage++;
 				}
